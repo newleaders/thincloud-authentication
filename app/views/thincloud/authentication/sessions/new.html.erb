@@ -1,0 +1,25 @@
+Current User: <%= current_user.inspect %>
+Signed In: <%= logged_in? %>
+
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#login" data-toggle="tab"><i class="icon-lock"></i> Login</a>
+    </li>
+    <li>
+      <a href="#register" data-toggle="tab"><i class="icon-user"></i> Register</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <!-- Login -->
+    <div class="tab-pane active" id="login">
+      <%= render "login_form" %>
+    </div>
+
+    <!-- Register -->
+    <div class="tab-pane" id="register">
+      <%= render "thincloud/authentication/registrations/registration_form" %>
+    </div>
+  </div>
+</div>
