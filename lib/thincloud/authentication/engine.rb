@@ -14,6 +14,11 @@ module Thincloud
         end
       end
 
+      initializer "thincloud.authentication.action_controller" do
+        ActionController::Base.send :include,
+          Thincloud::Authentication::AuthenticatableController
+      end
+
       config.generators do |g|
         g.test_framework :mini_test, spec: true, fixture: false
       end
