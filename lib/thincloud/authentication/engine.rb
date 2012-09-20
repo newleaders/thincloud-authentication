@@ -37,6 +37,10 @@ module Thincloud
         end
       end
 
+      initializer "thincloud.authentication.user" do
+        ::User.send :include, Thincloud::Authentication::IdentifiableUser
+      end
+
       initializer "thincloud.authentication.action_controller" do
         ActionController::Base.send :include,
           Thincloud::Authentication::AuthenticatableController
