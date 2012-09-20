@@ -63,7 +63,7 @@ module Thincloud::Authentication
     #
     # Returns: Boolean.
     def invalid_identity_credentials?
-      params[:provider] == "identity" && params[:auth_key].present?
+      params[:provider] == "identity" && params.has_key?(:auth_key)
     end
   end
 end
