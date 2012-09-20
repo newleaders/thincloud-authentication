@@ -6,13 +6,13 @@ module Thincloud::Authentication
     before_filter :authenticate!, only: [:authenticated]
 
     def new
-      redirect_to root_url if logged_in?
+      redirect_to main_app.root_url if logged_in?
       @identity = Identity.new
     end
 
     def destroy
       logout
-      redirect_to root_url, notice: "You have been logged out."
+      redirect_to main_app.root_url, notice: "You have been logged out."
     end
 
     def authenticated

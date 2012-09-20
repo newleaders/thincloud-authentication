@@ -11,11 +11,11 @@ module Thincloud::Authentication
       # identity exists
       if omniauth && identity = Identity.find_omniauth(omniauth)
         login_as identity.user
-        redirect_to root_url, notice: "You have been logged in."
+        redirect_to main_app.root_url, notice: "You have been logged in."
       # new identity for current_user
       elsif current_user
         current_user.identities.build.apply_omniauth(omniauth).save
-        redirect_to root_url, notice: "You have been logged in."
+        redirect_to main_app.root_url, notice: "You have been logged in."
       # failed identity login
       elsif invalid_identity_credentials?
         redirect_to auth_failure_url message: "invalid_credentials",
@@ -36,7 +36,7 @@ module Thincloud::Authentication
 
         if @identity.save
           login_as @identity.user if omniauth
-          redirect_to root_url
+          redirect_to main_app.root_url
         else
           render :new
         end
@@ -46,7 +46,7 @@ module Thincloud::Authentication
     def verify
       identity = Identity.verify!(params[:token])
       login_as identity.user
-      redirect_to root_url,
+      redirect_to main_app.root_url,
         notice: "Thank you! Your registration has been verified."
     end
 

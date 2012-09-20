@@ -43,7 +43,7 @@ module Thincloud::Authentication
 
         it { session[:uid].wont_be_nil }
         it { assert_response :redirect }
-        it { assert_redirected_to root_url }
+        it { assert_redirected_to "/" }
         it { flash[:notice].must_equal "You have been logged in." }
       end
 
@@ -80,7 +80,7 @@ module Thincloud::Authentication
         end
 
         it { assert_response :redirect }
-        it { assert_redirected_to root_url }
+        it { assert_redirected_to "/" }
         it { flash[:notice].must_equal "You have been logged in." }
 
         it { user.identities.count.must_equal 2 }
@@ -109,7 +109,7 @@ module Thincloud::Authentication
           end
 
           it { assert_response :redirect }
-          it { assert_redirected_to root_url }
+          it { assert_redirected_to "/" }
           it { session[:uid].must_be_nil }
           it { flash[:alert].must_equal "Welcome! Please check your email to " <<
                                         "verify your registration." }
@@ -136,7 +136,7 @@ module Thincloud::Authentication
           end
 
           it { assert_response :redirect }
-          it { assert_redirected_to root_url }
+          it { assert_redirected_to "/" }
           it { session[:uid].must_equal assigns[:identity].user.id }
           it { flash[:alert].must_be_nil }
           it { User.count.must_equal 1 }
@@ -164,7 +164,7 @@ module Thincloud::Authentication
         end
 
         it { assert_response :redirect }
-        it { assert_redirected_to root_url }
+        it { assert_redirected_to "/" }
         it { flash[:notice].must_equal "Thank you! Your registration has been verified." }
       end
     end
