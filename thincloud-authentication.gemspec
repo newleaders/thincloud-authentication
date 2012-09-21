@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
   s.add_dependency "omniauth", "~> 1.1.1"
   s.add_dependency "omniauth-identity", "~> 1.1.0"
 
-  s.add_development_dependency "sqlite3"
   s.add_development_dependency "cane"
   s.add_development_dependency "guard"
   s.add_development_dependency "growl"

@@ -8,6 +8,21 @@ gemspec
 # jquery-rails is used by the dummy application
 gem "jquery-rails"
 
-# database gems for Travis CI
-gem "mysql2"
-gem "pg"
+platforms :jruby do
+  gem "activerecord-jdbc-adapter", :require => false
+end
+
+group :test do
+  platforms :ruby do
+    gem "mysql2"
+    gem "pg"
+    gem "sqlite3"
+    gem "simplecov"
+  end
+
+  platforms :jruby do
+    gem "activerecord-jdbcmysql-adapter", :require => false
+    gem "activerecord-jdbcpostgresql-adapter", :require => false
+    gem "activerecord-jdbcsqlite3-adapter", :require => false
+  end
+end
