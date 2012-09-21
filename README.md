@@ -23,21 +23,45 @@ Add this line to your application's Gemfile:
 gem "thincloud-authentication"
 ```
 
-And then execute:
+* Run `bundle`
+* Copy the migrations and prepare your databases:
 
 ```
-$ bundle
+$ rake thincloud_authentication:install:migrations db:migrate db:test:prepare
 ```
 
-Or install it yourself as:
+* Mount the engine in your `config/routes.rb` file:
 
+```ruby
+mount Thincloud::Authentication::Engine => "/auth", as: "auth_engine"
 ```
-$ gem install thincloud-authentication
+
+Using the example above, you may now login or signup at [http://lvh.me:3000/auth](http://lvh.me:3000/auth).
+
+
+### Vanity Routes
+
+If you want to customize the routes (remove the `/auth` prefix), you may add the following to your `config/routes.rb` file:
+
+```ruby
+get "signup", to: "thincloud/authentication/registrations#new", as: "signup"
+get "login", to: "thincloud/authentication/sessions#new", as: "login"
+delete "logout", to: "thincloud/authentication/sessions#destroy", as: "logout"
 ```
 
-## Usage
+Using the example above, you will have the following routes locally:
 
-TODO
+* `signup_url` points to "/signup"
+* `login_url` points to "/login"
+* `logout_url` points to "/logout" - Make sure to use the `delete` method to logout.
+
+
+## TODO
+
+* Add "forgot password" functionality
+* Add multiple, configurable strategy options
+* Add a configuration option to customize the mailers
+
 
 ## Contributing
 
@@ -50,6 +74,6 @@ TODO
 
 ## License
 
-* Freely distributable and licensed under the MIT-style license. See LICENSE file for details.
-* Copyright (c) 2012 New Leaders
+* Freely distributable and licensed under the [MIT license](http://newleaders.mit-license.org/2012/license.html).
+* Copyright (c) 2012 New Leaders ([opensource@newleaders.com](opensource@newleaders.com))
 * [https://newleaders.com](https://newleaders.com)
