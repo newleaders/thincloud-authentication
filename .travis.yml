@@ -9,6 +9,5 @@ env:
   - CI=true RAILS_ENV=test JRUBY_OPTS=--1.9 RBXOPT=-X19 DB=postgres
   - CI=true RAILS_ENV=test JRUBY_OPTS=--1.9 RBXOPT=-X19 DB=sqlite
 before_script: "./test/ci/before_script.sh"
-script: 
-  - bundle exec rake test
-  - bundle exec cane
+script: "./test/ci/ci_runner.sh"
+
