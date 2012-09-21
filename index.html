@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Thincloud Authentication by newleaders</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Thincloud Authentication</h1>
+        <p>A Rails Engine to provide authentication for Thincloud applications.</p>
+        <p class="view"><a href="https://github.com/newleaders/thincloud-authentication">View the Project on GitHub <small>newleaders/thincloud-authentication</small></a></p>
+        <ul>
+          <li><a href="https://github.com/newleaders/thincloud-authentication/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/newleaders/thincloud-authentication/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/newleaders/thincloud-authentication">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Thincloud::Authentication</h1>
+
+<p><a href="http://travis-ci.org/newleaders/thincloud-authentication"><img src="https://secure.travis-ci.org/newleaders/thincloud-authentication.png" alt="Build Status"></a> <a href="https://codeclimate.com/github/newleaders/thincloud-authentication"><img src="https://codeclimate.com/badge.png" alt="Code Climate"></a></p>
+
+<h2>Description</h2>
+
+<p>A Rails Engine to provide authentication for Thincloud applications.</p>
+
+<h2>Requirements</h2>
+
+<p>This gem requires Rails 3.2+ and has been tested on the following versions:</p>
+
+<ul>
+<li>3.2</li>
+</ul><p>This gem has been tested against the following Ruby versions:</p>
+
+<ul>
+<li>MRI 1.9.2</li>
+<li>MRI 1.9.3</li>
+<li>JRuby 1.6+ (with <code>JRUBY_OPTS=--1.9</code>)</li>
+<li>Rubinius 2.0.0dev (with <code>RBXOPT=-X19</code>)</li>
+</ul><p>This gem has been tested against the following database versions:</p>
+
+<ul>
+<li>MySQL 5.0, 5.5</li>
+<li>PostgreSQL 9.1, 9.2</li>
+<li>SQLite 3</li>
+</ul><h2>Installation</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<div class="highlight"><pre><span class="n">gem</span> <span class="s2">"thincloud-authentication"</span>
+</pre></div>
+
+<ul>
+<li>Run <code>bundle</code>
+</li>
+<li>Copy the migrations and prepare your databases:</li>
+</ul><pre><code>$ rake thincloud_authentication:install:migrations db:migrate db:test:prepare
+</code></pre>
+
+<ul>
+<li>Mount the engine in your <code>config/routes.rb</code> file:</li>
+</ul><div class="highlight"><pre><span class="n">mount</span> <span class="no">Thincloud</span><span class="o">::</span><span class="no">Authentication</span><span class="o">::</span><span class="no">Engine</span> <span class="o">=&gt;</span> <span class="s2">"/auth"</span><span class="p">,</span> <span class="n">as</span><span class="p">:</span> <span class="s2">"auth_engine"</span>
+</pre></div>
+
+<p>Using the example above, you may now login or signup at <a href="http://lvh.me:3000/auth">http://lvh.me:3000/auth</a>.</p>
+
+<h3>Vanity Routes</h3>
+
+<p>If you want to customize the routes (remove the <code>/auth</code> prefix), you may add the following to your <code>config/routes.rb</code> file:</p>
+
+<div class="highlight"><pre><span class="n">get</span> <span class="s2">"signup"</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="s2">"thincloud/authentication/registrations#new"</span><span class="p">,</span> <span class="n">as</span><span class="p">:</span> <span class="s2">"signup"</span>
+<span class="n">get</span> <span class="s2">"login"</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="s2">"thincloud/authentication/sessions#new"</span><span class="p">,</span> <span class="n">as</span><span class="p">:</span> <span class="s2">"login"</span>
+<span class="n">delete</span> <span class="s2">"logout"</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="s2">"thincloud/authentication/sessions#destroy"</span><span class="p">,</span> <span class="n">as</span><span class="p">:</span> <span class="s2">"logout"</span>
+</pre></div>
+
+<p>Using the example above, you will have the following routes locally:</p>
+
+<ul>
+<li>
+<code>signup_url</code> points to "/signup"</li>
+<li>
+<code>login_url</code> points to "/login"</li>
+<li>
+<code>logout_url</code> points to "/logout" - Make sure to use the <code>delete</code> method to logout.</li>
+</ul><h2>TODO</h2>
+
+<ul>
+<li>Add "forgot password" functionality</li>
+<li>Add multiple, configurable strategy options</li>
+<li>Add a configuration option to customize the mailers</li>
+</ul><h2>Contributing</h2>
+
+<ol>
+<li><a href="https://github.com/newleaders/thincloud-authentication/fork_select">Fork it</a></li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Added some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li><a href="https://github.com/newleaders/thincloud-authentication/pull/new">Create a Pull Request</a></li>
+</ol><h2>License</h2>
+
+<ul>
+<li>Freely distributable and licensed under the <a href="http://newleaders.mit-license.org/2012/license.html">MIT license</a>.</li>
+<li>Copyright (c) 2012 New Leaders (<a href="opensource@newleaders.com">opensource@newleaders.com</a>)</li>
+<li><a href="https://newleaders.com">https://newleaders.com</a></li>
+</ul>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/newleaders">newleaders</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-1755363-18");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
