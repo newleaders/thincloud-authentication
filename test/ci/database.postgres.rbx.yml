@@ -1,0 +1,8 @@
+# Travis CI
+test:
+  adapter: postgresql
+  database: thincloud_authentication_test
+  username: postgres
+  encoding: unicode
+  host: localhost
+  min_messages: warning

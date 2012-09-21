@@ -1,0 +1,6 @@
+# Travis CI
+test:
+  adapter: mysql2
+  database: thincloud_authentication_test
+  username: root
+  encoding: utf8
