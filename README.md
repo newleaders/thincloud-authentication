@@ -1,5 +1,7 @@
 # Thincloud::Authentication
 
+[![Build Status](https://secure.travis-ci.org/newleaders/thincloud-authentication.png)](http://travis-ci.org/newleaders/thincloud-authentication) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/newleaders/thincloud-authentication)
+
 ## Description
 
 A Rails Engine to provide authentication for Thincloud applications.
@@ -12,7 +14,16 @@ This gem requires Rails 3.2+ and has been tested on the following versions:
 
 This gem has been tested against the following Ruby versions:
 
-* 1.9.3
+* MRI 1.9.2
+* MRI 1.9.3
+* JRuby 1.6+ (with `JRUBY_OPTS=--1.9`)
+* Rubinius 2.0.0dev (with `RBXOPT=-X19`)
+
+This gem has been tested against the following database versions:
+
+* MySQL 5.0, 5.5
+* PostgreSQL 9.1, 9.2
+* SQLite 3
 
 
 ## Installation
