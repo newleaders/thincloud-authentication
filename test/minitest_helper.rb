@@ -1,8 +1,14 @@
-require "simplecov"
-SimpleCov.add_filter "test"
-SimpleCov.add_filter "config"
-SimpleCov.command_name "MiniTest"
-SimpleCov.start
+if RUBY_ENGINE == "ruby"
+  begin
+    require "simplecov"
+    SimpleCov.add_filter "test"
+    SimpleCov.add_filter "config"
+    SimpleCov.command_name "MiniTest"
+    SimpleCov.start
+  rescue LoadError
+    warn "unable to load SimpleCov"
+  end
+end
 
 ENV["RAILS_ENV"] = "test"
 require File.expand_path("../dummy/config/environment",  __FILE__)
