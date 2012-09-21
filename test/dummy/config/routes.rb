@@ -4,8 +4,8 @@ Rails.application.routes.draw do
 
   namespace :thincloud do
     namespace :authentication do
-      match "auth/:provider/callback" => "registrations#create"
-      get "auth/failure", to: "sessions#new"
+      match ":provider/callback" => "registrations#create"
+      get "failure", to: "sessions#new"
 
       get "login", to: "sessions#new", as: "login"
       delete "logout", to: "sessions#destroy", as: "logout"
