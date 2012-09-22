@@ -50,6 +50,26 @@ mount Thincloud::Authentication::Engine => "/auth", as: "auth_engine"
 Using the example above, you may now login or signup at [http://lvh.me:3000/auth](http://lvh.me:3000/auth).
 
 
+## Configuration
+
+The `Thincloud::Authentication` module accepts a `configure` block with options to specify additional provider strategies. Add a key to the `providers` hash with the name of the strategy, followed by additional options for `scopes` and `fields` as needed. Additionally, you will need to provide environment variables (prefixed with the provider name), with the `consumer_key` and `consumer_secret` values from your OAuth provider.
+
+To enable the [LinkedIn](https://github.com/skorks/omniauth-linkedin) provider:
+
+* Provide values for `ENV["LINKEDIN_CONSUMER_KEY"]` and `ENV["LINKEDIN_CONSUMER_SECRET"]`
+* Add the file `config/initializers/thincloud_authentication.rb` with the following contents:
+
+```ruby
+Thincloud::Authentication.configure do |config|
+  config.providers[:linkedin] = {
+    scopes: "r_emailaddress r_basicprofile",
+    fields: ["id", "email-address", "first-name", "last-name", "headline",
+             "industry", "picture-url", "location", "public-profile-url"]
+  }
+end
+```
+
+
 ### Vanity Routes
 
 If you want to customize the routes (remove the `/auth` prefix), you may add the following to your `config/routes.rb` file:
