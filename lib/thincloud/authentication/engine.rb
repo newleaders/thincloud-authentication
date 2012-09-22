@@ -8,9 +8,22 @@ module Thincloud
         require "omniauth"
         require "omniauth-identity"
 
+        config = Thincloud::Authentication.configuration || Configuration.new
+        strategies = config.providers.keys
+        strategies.each { |strategy| require "omniauth-#{strategy}" }
+
         app.middleware.use ::OmniAuth::Builder do
+
+          # always provide the Identity strategy
           provider :identity, fields: [:email], model: Identity,
             on_failed_registration: RegistrationsController.action(:new)
+
+          strategies.each do |strategy|
+            provider strategy, ENV["#{strategy.to_s.upcase}_CONSUMER_KEY"],
+              ENV["#{strategy.to_s.upcase}_CONSUMER_SECRET"],
+              fields: config.providers[strategy][:fields],
+              scope: config.providers[strategy][:scopes]
+          end
         end
       end
 
