@@ -49,6 +49,13 @@ mount Thincloud::Authentication::Engine => "/auth", as: "auth_engine"
 
 Using the example above, you may now login or signup at [http://lvh.me:3000/auth](http://lvh.me:3000/auth).
 
+### Prerequisites
+
+The following must be true for `thincloud-authentication` to operate properly:
+
+* A `root_url` must be defined in `config/routes.rb`
+* A `User` model must exist
+
 
 ## Configuration
 
