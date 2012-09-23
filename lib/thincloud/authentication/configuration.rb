@@ -8,6 +8,7 @@ module Thincloud::Authentication
     yield configuration
   end
 
+  # Public: Configuration options for the Thincloud::Authentication module
   class Configuration
     attr_accessor :providers
 
