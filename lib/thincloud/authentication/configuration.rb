@@ -8,11 +8,13 @@ module Thincloud::Authentication
     yield configuration
   end
 
+  # Public: Configuration options for the Thincloud::Authentication module
   class Configuration
-    attr_accessor :providers
+    attr_accessor :providers, :mailer_sender
 
     def initialize
       @providers = {}
+      @mailer_sender = "app@example.com"
     end
   end
 end

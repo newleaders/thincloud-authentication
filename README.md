@@ -49,10 +49,33 @@ mount Thincloud::Authentication::Engine => "/auth", as: "auth_engine"
 
 Using the example above, you may now login or signup at [http://lvh.me:3000/auth](http://lvh.me:3000/auth).
 
+### Prerequisites
+
+The following must be true for `thincloud-authentication` to operate properly:
+
+* A `root_url` must be defined in `config/routes.rb`
+* A `User` model must exist
+
 
 ## Configuration
 
-The `Thincloud::Authentication` module accepts a `configure` block with options to specify additional provider strategies. Add a key to the `providers` hash with the name of the strategy, followed by additional options for `scopes` and `fields` as needed. Additionally, you will need to provide environment variables (prefixed with the provider name), with the `consumer_key` and `consumer_secret` values from your OAuth provider.
+The `Thincloud::Authentication` module accepts a `configure` block with options to customize the engine behavior.
+
+
+### Mailers
+
+Set the `mailer_sender` option to customize the "From" address of the emails sent from the system:
+
+```ruby
+Thincloud::Authentication.configure do |config|
+  config.mailer_sender = "app@example.com"
+end
+```
+
+
+### Additional provider strategies
+
+Add a key to the `providers` hash with the name of the strategy, followed by additional options for `scopes` and `fields` as needed. Additionally, you will need to provide environment variables (prefixed with the provider name), with the `consumer_key` and `consumer_secret` values from your OAuth provider.
 
 To enable the [LinkedIn](https://github.com/skorks/omniauth-linkedin) provider:
 

@@ -30,6 +30,7 @@ module Thincloud::Authentication
         if omniauth
           login_as @identity.user
         else
+          RegistrationsMailer.verification_token(@identity).deliver
           flash[:alert] = "Check your email to verify your registration."
         end
         redirect_to main_app.root_url
