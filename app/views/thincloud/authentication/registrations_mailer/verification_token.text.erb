@@ -1,0 +1,5 @@
+Welcome <%= @identity.email %>!
+
+You can verify your account through the link below:
+
+<%= verify_token_url(token: @identity.verification_token) %>

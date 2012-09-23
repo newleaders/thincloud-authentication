@@ -114,6 +114,8 @@ module Thincloud::Authentication
           it { flash[:alert].must_equal "Check your email to verify your registration." }
           it { User.count.must_equal 1 }
           it { Identity.count.must_equal 1 }
+          it { ActionMailer::Base.deliveries.map(&:to).flatten.must_include "foo@bar.com" }
+          it { ActionMailer::Base.deliveries.map(&:subject).must_include "Identity Verification" }
         end
 
         describe "with 'linkedin' provider" do
