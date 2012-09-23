@@ -75,6 +75,46 @@
 
 <p>Using the example above, you may now login or signup at <a href="http://lvh.me:3000/auth">http://lvh.me:3000/auth</a>.</p>
 
+<h3>Prerequisites</h3>
+
+<p>The following must be true for <code>thincloud-authentication</code> to operate properly:</p>
+
+<ul>
+<li>A <code>root_url</code> must be defined in <code>config/routes.rb</code>
+</li>
+<li>A <code>User</code> model must exist</li>
+</ul><h2>Configuration</h2>
+
+<p>The <code>Thincloud::Authentication</code> module accepts a <code>configure</code> block with options to customize the engine behavior.</p>
+
+<h3>Mailers</h3>
+
+<p>Set the <code>mailer_sender</code> option to customize the "From" address of the emails sent from the system:</p>
+
+<div class="highlight"><pre><span class="no">Thincloud</span><span class="o">::</span><span class="no">Authentication</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">mailer_sender</span> <span class="o">=</span> <span class="s2">"app@example.com"</span>
+<span class="k">end</span>
+</pre></div>
+
+<h3>Additional provider strategies</h3>
+
+<p>Add a key to the <code>providers</code> hash with the name of the strategy, followed by additional options for <code>scopes</code> and <code>fields</code> as needed. Additionally, you will need to provide environment variables (prefixed with the provider name), with the <code>consumer_key</code> and <code>consumer_secret</code> values from your OAuth provider.</p>
+
+<p>To enable the <a href="https://github.com/skorks/omniauth-linkedin">LinkedIn</a> provider:</p>
+
+<ul>
+<li>Provide values for <code>ENV["LINKEDIN_CONSUMER_KEY"]</code> and <code>ENV["LINKEDIN_CONSUMER_SECRET"]</code>
+</li>
+<li>Add the file <code>config/initializers/thincloud_authentication.rb</code> with the following contents:</li>
+</ul><div class="highlight"><pre><span class="no">Thincloud</span><span class="o">::</span><span class="no">Authentication</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">providers</span><span class="o">[</span><span class="ss">:linkedin</span><span class="o">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">scopes</span><span class="p">:</span> <span class="s2">"r_emailaddress r_basicprofile"</span><span class="p">,</span>
+    <span class="n">fields</span><span class="p">:</span> <span class="o">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"email-address"</span><span class="p">,</span> <span class="s2">"first-name"</span><span class="p">,</span> <span class="s2">"last-name"</span><span class="p">,</span> <span class="s2">"headline"</span><span class="p">,</span>
+             <span class="s2">"industry"</span><span class="p">,</span> <span class="s2">"picture-url"</span><span class="p">,</span> <span class="s2">"location"</span><span class="p">,</span> <span class="s2">"public-profile-url"</span><span class="o">]</span>
+  <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+
 <h3>Vanity Routes</h3>
 
 <p>If you want to customize the routes (remove the <code>/auth</code> prefix), you may add the following to your <code>config/routes.rb</code> file:</p>
