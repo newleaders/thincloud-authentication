@@ -111,7 +111,7 @@ module Thincloud::Authentication
           it { assert_response :redirect }
           it { assert_redirected_to "/" }
           it { session[:uid].must_be_nil }
-          it { flash[:alert].must_equal "Check your email to verify your registration." }
+          it { flash[:notice].must_equal "Check your email to verify your registration." }
           it { User.count.must_equal 1 }
           it { Identity.count.must_equal 1 }
           it { ActionMailer::Base.deliveries.map(&:to).flatten.must_include "foo@bar.com" }
