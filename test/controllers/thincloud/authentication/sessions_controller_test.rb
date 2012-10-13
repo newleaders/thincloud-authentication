@@ -12,7 +12,7 @@ module Thincloud::Authentication
     describe "DELETE destroy" do
       before { delete :destroy }
 
-      it { assert_response :redirect }
+      it { assert_redirected_to "/" }
       it { flash[:notice].must_equal "You have been logged out." }
     end
 
