@@ -3,10 +3,22 @@ require "minitest_helper"
 module Thincloud::Authentication
   describe SessionsController do
     describe "GET new" do
-      before { get :new }
 
-      it { assert_response :success }
-      it { assert_template :new }
+      describe "when not logged in" do
+        before { get :new }
+
+        it { assert_response :success }
+        it { assert_template :new }
+      end
+
+      describe "when logged in" do
+        before do
+          SessionsController.any_instance.stubs(:logged_in?).returns(true)
+          get :new
+        end
+
+        it { assert_redirected_to "/" }
+      end
     end
 
     describe "DELETE destroy" do
