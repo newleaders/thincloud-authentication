@@ -33,7 +33,7 @@ module Thincloud::Authentication
           RegistrationsMailer.verification_token(@identity).deliver
           flash[:notice] = "Check your email to verify your registration."
         end
-        redirect_to main_app.root_url
+        redirect_to after_registration_path
       end
     end
 
