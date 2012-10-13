@@ -62,6 +62,15 @@ The following must be true for `thincloud-authentication` to operate properly:
 The `Thincloud::Authentication` module accepts a `configure` block with options to customize the engine behavior.
 
 
+### Layouts
+
+Set the `layout` option to customize the layout used by all thincloud-authentication views:
+
+```ruby
+Thincloud::Authentication.configure do |config|
+  config.layout = "other"
+end
+
 ### Mailers
 
 Set the `mailer_sender` option to customize the "From" address of the emails sent from the system:
