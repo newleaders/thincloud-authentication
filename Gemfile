@@ -7,6 +7,7 @@ gemspec
 
 # jquery-rails is used by the dummy application
 gem "jquery-rails"
+gem "omniauth-linkedin"
 
 platforms :jruby do
   gem "activerecord-jdbc-adapter", :require => false

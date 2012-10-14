@@ -10,10 +10,12 @@ module Thincloud
 
         config = Thincloud::Authentication.configuration || Configuration.new
         strategies = config.providers.keys
-        strategies.each { |strategy| require "omniauth-#{strategy}" }
+        strategies.each do |strategy|
+          lib = config.providers[strategy][:require] || "omniauth-#{strategy}"
+          require lib
+        end
 
         app.middleware.use ::OmniAuth::Builder do
-
           # always provide the Identity strategy
           provider :identity, fields: [:email], model: Identity,
             on_failed_registration: RegistrationsController.action(:new)

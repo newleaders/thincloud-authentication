@@ -70,6 +70,7 @@ Set the `layout` option to customize the layout used by all thincloud-authentica
 Thincloud::Authentication.configure do |config|
   config.layout = "other"
 end
+```
 
 ### Mailers
 
@@ -84,19 +85,37 @@ end
 
 ### Additional provider strategies
 
-Add a key to the `providers` hash with the name of the strategy, followed by additional options for `scopes` and `fields` as needed. Additionally, you will need to provide environment variables (prefixed with the provider name), with the `consumer_key` and `consumer_secret` values from your OAuth provider.
+* Require the `omniauth-#{provider}` gem before the `thincloud-authentication` gem in the `Gemfile`:
 
-To enable the [LinkedIn](https://github.com/skorks/omniauth-linkedin) provider:
+```ruby
+gem "omniauth-linkedin"
+gem "omniauth-stripe-connect"
+gem "thincloud-authentication"
+```
 
-* Provide values for `ENV["LINKEDIN_CONSUMER_KEY"]` and `ENV["LINKEDIN_CONSUMER_SECRET"]`
+* Add a key to the `providers` hash with the name of the strategy, followed by additional options for `require`, `scopes` and `fields` as needed. Additionally, you will need to provide environment variables (prefixed with the provider name), with the `consumer_key` and `consumer_secret` values from your OAuth provider.
+
+To enable the [LinkedIn](https://github.com/skorks/omniauth-linkedin) and [Stripe Connect](https://github.com/isaacsanders/omniauth-stripe-connect) providers:
+
+* Provide values for following environment variables:
+    * `ENV["LINKEDIN_CONSUMER_KEY"]`
+    * `ENV["LINKEDIN_CONSUMER_SECRET"]`
+    * `ENV["STRIPE_CONNECT_CONSUMER_KEY"]`
+    * `ENV["STRIPE_CONNECT_CONSUMER_SECRET"]`
 * Add the file `config/initializers/thincloud_authentication.rb` with the following contents:
 
 ```ruby
 Thincloud::Authentication.configure do |config|
-  config.providers[:linkedin] = {
-    scopes: "r_emailaddress r_basicprofile",
-    fields: ["id", "email-address", "first-name", "last-name", "headline",
-             "industry", "picture-url", "location", "public-profile-url"]
+  config.providers = {
+    linkedin: {
+      scopes: "r_emailaddress r_basicprofile",
+      fields: ["id", "email-address", "first-name", "last-name", "headline",
+               "industry", "picture-url", "location", "public-profile-url"]
+    },
+    stripe_connect: {
+      require: "omniauth-stripe-connect",
+      scopes: "read_write"
+    }
   }
 end
 ```
