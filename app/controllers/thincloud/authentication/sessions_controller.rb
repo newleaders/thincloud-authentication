@@ -6,13 +6,13 @@ module Thincloud::Authentication
     before_filter :authenticate!, only: [:authenticated]
 
     def new
-      redirect_to after_login_path if logged_in?
+      redirect_to Thincloud::Authentication.configuration.after_login_path if logged_in?
       @identity = Identity.new
     end
 
     def destroy
       logout
-      redirect_to after_logout_path, notice: "You have been logged out."
+      redirect_to Thincloud::Authentication.configuration.after_logout_path, notice: "You have been logged out."
     end
 
     def authenticated
