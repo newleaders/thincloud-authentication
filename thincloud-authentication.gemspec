@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 3.2.8"
   s.add_dependency "omniauth", "~> 1.1.1"
   s.add_dependency "omniauth-identity", "~> 1.1.0"
-  s.add_dependency "omniauth-linkedin", "~> 0.0.8"
 
   s.add_development_dependency "cane", "~> 2.3.0"
   s.add_development_dependency "guard", "~> 1.3.3"
