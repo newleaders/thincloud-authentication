@@ -20,13 +20,12 @@ Gem::Specification.new do |s|
   s.add_dependency "omniauth-identity", "~> 1.1.0"
 
   s.add_development_dependency "cane", "~> 2.3.0"
-  s.add_development_dependency "guard", "~> 1.3.3"
+  s.add_development_dependency "guard", "~> 1.4.0"
   s.add_development_dependency "minitest", "~> 3.4.0"
   s.add_development_dependency "guard-minitest", "~> 0.5.0"
-  s.add_development_dependency "minitest-rails", "~> 0.1.3"
-  s.add_development_dependency "minitest-rails-shoulda", "~> 0.1.0"
+  s.add_development_dependency "minitest-rails", "~> 0.2.0"
+  s.add_development_dependency "minitest-rails-shoulda", "~> 0.2.0"
   s.add_development_dependency "rb-fsevent", "~> 0.9.1"
-  s.add_development_dependency "simplecov", "~> 0.6.4"
-  s.add_development_dependency "mocha", "~> 0.12.4" # Must be after minitest
-
+  s.add_development_dependency "simplecov", "~> 0.7.1"
+  s.add_development_dependency "mocha", "~> 0.12.7" # Must be after minitest
 end
