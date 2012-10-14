@@ -87,6 +87,15 @@
 
 <p>The <code>Thincloud::Authentication</code> module accepts a <code>configure</code> block with options to customize the engine behavior.</p>
 
+<h3>Layouts</h3>
+
+<p>Set the <code>layout</code> option to customize the layout used by all thincloud-authentication views:</p>
+
+<div class="highlight"><pre><span class="no">Thincloud</span><span class="o">::</span><span class="no">Authentication</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="s2">"other"</span>
+<span class="k">end</span>
+</pre></div>
+
 <h3>Mailers</h3>
 
 <p>Set the <code>mailer_sender</code> option to customize the "From" address of the emails sent from the system:</p>
@@ -98,19 +107,39 @@
 
 <h3>Additional provider strategies</h3>
 
-<p>Add a key to the <code>providers</code> hash with the name of the strategy, followed by additional options for <code>scopes</code> and <code>fields</code> as needed. Additionally, you will need to provide environment variables (prefixed with the provider name), with the <code>consumer_key</code> and <code>consumer_secret</code> values from your OAuth provider.</p>
-
-<p>To enable the <a href="https://github.com/skorks/omniauth-linkedin">LinkedIn</a> provider:</p>
+<ul>
+<li>Require the <code>omniauth-#{provider}</code> gem before the <code>thincloud-authentication</code> gem in the <code>Gemfile</code>:</li>
+</ul><div class="highlight"><pre><span class="n">gem</span> <span class="s2">"omniauth-linkedin"</span>
+<span class="n">gem</span> <span class="s2">"omniauth-stripe-connect"</span>
+<span class="n">gem</span> <span class="s2">"thincloud-authentication"</span>
+</pre></div>
 
 <ul>
-<li>Provide values for <code>ENV["LINKEDIN_CONSUMER_KEY"]</code> and <code>ENV["LINKEDIN_CONSUMER_SECRET"]</code>
+<li>Add a key to the <code>providers</code> hash with the name of the strategy, followed by additional options for <code>require</code>, <code>scopes</code> and <code>fields</code> as needed. Additionally, you will need to provide environment variables (prefixed with the provider name), with the <code>consumer_key</code> and <code>consumer_secret</code> values from your OAuth provider.</li>
+</ul><p>To enable the <a href="https://github.com/skorks/omniauth-linkedin">LinkedIn</a> and <a href="https://github.com/isaacsanders/omniauth-stripe-connect">Stripe Connect</a> providers:</p>
+
+<ul>
+<li>Provide values for following environment variables:
+
+<ul>
+<li><code>ENV["LINKEDIN_CONSUMER_KEY"]</code></li>
+<li><code>ENV["LINKEDIN_CONSUMER_SECRET"]</code></li>
+<li><code>ENV["STRIPE_CONNECT_CONSUMER_KEY"]</code></li>
+<li><code>ENV["STRIPE_CONNECT_CONSUMER_SECRET"]</code></li>
+</ul>
 </li>
 <li>Add the file <code>config/initializers/thincloud_authentication.rb</code> with the following contents:</li>
 </ul><div class="highlight"><pre><span class="no">Thincloud</span><span class="o">::</span><span class="no">Authentication</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">providers</span><span class="o">[</span><span class="ss">:linkedin</span><span class="o">]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">scopes</span><span class="p">:</span> <span class="s2">"r_emailaddress r_basicprofile"</span><span class="p">,</span>
-    <span class="n">fields</span><span class="p">:</span> <span class="o">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"email-address"</span><span class="p">,</span> <span class="s2">"first-name"</span><span class="p">,</span> <span class="s2">"last-name"</span><span class="p">,</span> <span class="s2">"headline"</span><span class="p">,</span>
-             <span class="s2">"industry"</span><span class="p">,</span> <span class="s2">"picture-url"</span><span class="p">,</span> <span class="s2">"location"</span><span class="p">,</span> <span class="s2">"public-profile-url"</span><span class="o">]</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">providers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">linkedin</span><span class="p">:</span> <span class="p">{</span>
+      <span class="n">scopes</span><span class="p">:</span> <span class="s2">"r_emailaddress r_basicprofile"</span><span class="p">,</span>
+      <span class="n">fields</span><span class="p">:</span> <span class="o">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"email-address"</span><span class="p">,</span> <span class="s2">"first-name"</span><span class="p">,</span> <span class="s2">"last-name"</span><span class="p">,</span> <span class="s2">"headline"</span><span class="p">,</span>
+               <span class="s2">"industry"</span><span class="p">,</span> <span class="s2">"picture-url"</span><span class="p">,</span> <span class="s2">"location"</span><span class="p">,</span> <span class="s2">"public-profile-url"</span><span class="o">]</span>
+    <span class="p">},</span>
+    <span class="n">stripe_connect</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nb">require</span><span class="p">:</span> <span class="s2">"omniauth-stripe-connect"</span><span class="p">,</span>
+      <span class="n">scopes</span><span class="p">:</span> <span class="s2">"read_write"</span>
+    <span class="p">}</span>
   <span class="p">}</span>
 <span class="k">end</span>
 </pre></div>
@@ -133,6 +162,17 @@
 <code>login_url</code> points to "/login"</li>
 <li>
 <code>logout_url</code> points to "/logout" - Make sure to use the <code>delete</code> method to logout.</li>
+</ul><h3>Redirection</h3>
+
+<p>You can customize the paths used to redirect users after login, logout and registration by overriding the corresponding methods in your ApplicationController, or specific controllers, as needed.</p>
+
+<ul>
+<li>
+<code>after_login_path</code> is used after the user logs in.</li>
+<li>
+<code>after_logout_path</code> is used after the user logs out.</li>
+<li>
+<code>after_registration_path</code> is used after the user registers.</li>
 </ul><h2>TODO</h2>
 
 <ul>
