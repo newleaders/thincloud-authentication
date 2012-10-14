@@ -70,6 +70,7 @@ Set the `layout` option to customize the layout used by all thincloud-authentica
 Thincloud::Authentication.configure do |config|
   config.layout = "other"
 end
+```
 
 ### Mailers
 
