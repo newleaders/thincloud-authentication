@@ -58,27 +58,6 @@ module Thincloud
         reset_session
       end
 
-      # Protected: Provides the URL to redirect to after logging in.
-      #
-      # Returns: A string.
-      def after_login_path
-        main_app.root_url
-      end
-
-      # Protected: Provides the URL to redirect to after logging out.
-      #
-      # Returns: A string.
-      def after_logout_path
-        main_app.root_url
-      end
-
-      # Protected: Provides the URL to redirect to after registering.
-      #
-      # Returns: A string.
-      def after_registration_path
-        main_app.root_url
-      end
-
     end
 
   end

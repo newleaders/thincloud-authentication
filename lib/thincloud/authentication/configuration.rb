@@ -11,12 +11,17 @@ module Thincloud
 
     # Public: Configuration options for the Thincloud::Authentication module
     class Configuration
-      attr_accessor :layout, :providers, :mailer_sender
+      attr_accessor :providers, :layout, :mailer_sender, :after_login_path,
+        :after_logout_path, :after_registration_path, :after_verification_path
 
       def initialize
-        @layout = "application"
         @providers = {}
+        @layout = "application"
         @mailer_sender = "app@example.com"
+        @after_login_path = "/"
+        @after_logout_path = "/"
+        @after_registration_path = "/"
+        @after_verification_path = "/"
       end
     end
   end
