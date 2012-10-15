@@ -82,6 +82,19 @@ Thincloud::Authentication.configure do |config|
 end
 ```
 
+### Redirect Paths
+
+Set the following options to customize the redirects that occur after certain actions:
+
+```ruby
+Thincloud::Authentication.configure do |config|
+  config.after_login_path = "/dashboard"
+  config.after_logout_path = "/"
+  config.after_registration_path = "/""
+  config.after_verification_path = "/dashboard"
+end
+```
+
 
 ### Additional provider strategies
 
