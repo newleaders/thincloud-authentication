@@ -1,9 +1,9 @@
-require_dependency "thincloud/authentication/application_controller"
-
 module Thincloud::Authentication
   # Public: Handle login/logout behavior.
   class SessionsController < ApplicationController
     before_filter :authenticate!, only: [:authenticated]
+
+    layout Thincloud::Authentication.configuration.layout
 
     def new
       redirect_to after_login_path if logged_in?

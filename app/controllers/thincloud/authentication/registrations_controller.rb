@@ -1,9 +1,9 @@
-require_dependency "thincloud/authentication/application_controller"
-
 module Thincloud::Authentication
   # Public: Handle OmniAuth callbacks.
   class RegistrationsController < ApplicationController
     before_filter :extract_identity, only: :create
+
+    layout Thincloud::Authentication.configuration.layout
 
     def new
       @identity = Identity.new
