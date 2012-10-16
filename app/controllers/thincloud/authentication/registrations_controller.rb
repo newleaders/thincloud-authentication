@@ -15,11 +15,11 @@ module Thincloud::Authentication
       # identity exists
       if @identity.present?
         login_as @identity.user
-        redirect_to after_registration_path, notice: "You have been logged in."
+        redirect_to after_login_path, notice: "You have been logged in."
       # new identity for current_user
       elsif current_user
         add_omniauth_identity_to_current_user
-        redirect_to after_registration_path, notice: "You have been logged in."
+        redirect_to after_login_path, notice: "You have been logged in."
       # failed identity login
       elsif invalid_identity_credentials?
         redirect_to auth_failure_url message: "invalid_credentials",
