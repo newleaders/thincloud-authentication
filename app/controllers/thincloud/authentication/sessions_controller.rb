@@ -5,6 +5,8 @@ module Thincloud::Authentication
 
     layout Thincloud::Authentication.configuration.layout
 
+    helper "thincloud/authentication/registrations"
+
     def new
       redirect_to after_login_path if logged_in?
       @identity = Identity.new

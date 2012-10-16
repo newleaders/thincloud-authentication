@@ -5,6 +5,8 @@ module Thincloud::Authentication
 
     layout Thincloud::Authentication.configuration.layout
 
+    helper "thincloud/authentication/registrations"
+
     def new
       @identity = Identity.new
     end
