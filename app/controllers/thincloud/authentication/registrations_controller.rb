@@ -42,7 +42,7 @@ module Thincloud::Authentication
     def verify
       identity = Identity.verify!(params[:token])
       login_as identity.user
-      redirect_to after_verify_path,
+      redirect_to after_verification_path,
         notice: "Thank you! Your registration has been verified."
     end
 

@@ -145,7 +145,7 @@ You can customize the paths used to redirect users after login, logout, registra
 * `after_login_path` is used after the user logs in.
 * `after_logout_path` is used after the user logs out.
 * `after_registration_path` is used after the user registers.
-* `after_verify_path` is used after the user verifies their email.
+* `after_verification_path` is used after the user verifies their email.
 
 ## TODO
 
