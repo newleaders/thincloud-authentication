@@ -79,6 +79,14 @@ module Thincloud
         main_app.root_url
       end
 
+      # Protected: Provides the URL to redirect to after verifying.
+      #
+      # Returns: A string.
+      def after_verify_path
+        main_app.root_url
+      end
+
+
     end
 
   end
