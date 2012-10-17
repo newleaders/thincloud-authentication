@@ -1,9 +1,11 @@
-require_dependency "thincloud/authentication/application_controller"
-
 module Thincloud::Authentication
   # Public: Handle OmniAuth callbacks.
   class RegistrationsController < ApplicationController
     before_filter :extract_identity, only: :create
+
+    layout Thincloud::Authentication.configuration.layout
+
+    helper "thincloud/authentication/registrations"
 
     def new
       @identity = Identity.new
@@ -13,11 +15,11 @@ module Thincloud::Authentication
       # identity exists
       if @identity.present?
         login_as @identity.user
-        redirect_to main_app.root_url, notice: "You have been logged in."
+        redirect_to after_login_path, notice: "You have been logged in."
       # new identity for current_user
       elsif current_user
         add_omniauth_identity_to_current_user
-        redirect_to main_app.root_url, notice: "You have been logged in."
+        redirect_to after_login_path, notice: "You have been logged in."
       # failed identity login
       elsif invalid_identity_credentials?
         redirect_to auth_failure_url message: "invalid_credentials",
@@ -40,7 +42,7 @@ module Thincloud::Authentication
     def verify
       identity = Identity.verify!(params[:token])
       login_as identity.user
-      redirect_to main_app.root_url,
+      redirect_to after_verification_path,
         notice: "Thank you! Your registration has been verified."
     end
 

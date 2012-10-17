@@ -140,12 +140,12 @@ Using the example above, you will have the following routes locally:
 
 ### Redirection
 
-You can customize the paths used to redirect users after login, logout and registration by overriding the corresponding methods in your ApplicationController, or specific controllers, as needed.
+You can customize the paths used to redirect users after login, logout, registration and email verification by overriding the corresponding methods in your ApplicationController, or specific controllers, as needed.
 
 * `after_login_path` is used after the user logs in.
 * `after_logout_path` is used after the user logs out.
 * `after_registration_path` is used after the user registers.
-
+* `after_verification_path` is used after the user verifies their email.
 
 ## TODO
 
