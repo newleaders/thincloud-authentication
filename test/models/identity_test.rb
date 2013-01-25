@@ -16,15 +16,41 @@ module Thincloud::Authentication
     it { identity.must_respond_to(:verified_at) }
 
     describe "self.find_omniauth(omniauth)" do
-      let(:auth_hash) do
-        OmniAuth::AuthHash.new(provider: "identity", uid: "123")
+      describe "with valid uid" do
+        let(:auth_hash) do
+          OmniAuth::AuthHash.new(provider: "identity", uid: "123")
+        end
+
+        before do
+          Identity.expects(:find_by_provider_and_uid).with("identity", "123")
+        end
+
+        it { Identity.find_omniauth(auth_hash) }
       end
 
-      before do
-        Identity.expects(:find_by_provider_and_uid).with("identity", "123")
+      describe "with nil uid" do
+        let(:auth_hash) do
+          OmniAuth::AuthHash.new(provider: "identity", uid: nil)
+        end
+
+        before do
+          Identity.expects(:find_by_provider_and_uid).never
+        end
+
+        it { Identity.find_omniauth(auth_hash).must_be_nil }
       end
 
-      it { Identity.find_omniauth(auth_hash) }
+      describe "with empty uid" do
+        let(:auth_hash) do
+          OmniAuth::AuthHash.new(provider: "identity", uid: "")
+        end
+
+        before do
+          Identity.expects(:find_by_provider_and_uid).never
+        end
+
+        it { Identity.find_omniauth(auth_hash).must_be_nil }
+      end
     end
 
     describe "self.verify!(token)" do
