@@ -30,7 +30,9 @@ module Thincloud::Authentication
     #
     # Returns: An instance of `Identity` or `nil`.
     def self.find_omniauth(omniauth)
-      find_by_provider_and_uid omniauth["provider"], omniauth["uid"]
+      if omniauth["uid"].present?
+        find_by_provider_and_uid omniauth["provider"], omniauth["uid"]
+      end
     end
 
     # Public: Mark the `Identity` as having been verified.
