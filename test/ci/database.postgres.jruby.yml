@@ -1,6 +1,6 @@
 # Travis CI
 test:
-  adapter: jdbcpostgresql
+  adapter: postgresql
   database: thincloud_authentication_test
   username: postgres
   encoding: unicode
