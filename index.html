@@ -1,33 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Thincloud Authentication by newleaders</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <title>Thincloud Authentication by newleaders</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Thincloud Authentication</h1>
-        <p>A Rails Engine to provide authentication for Thincloud applications.</p>
-        <p class="view"><a href="https://github.com/newleaders/thincloud-authentication">View the Project on GitHub <small>newleaders/thincloud-authentication</small></a></p>
-        <ul>
-          <li><a href="https://github.com/newleaders/thincloud-authentication/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/newleaders/thincloud-authentication/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/newleaders/thincloud-authentication">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>Thincloud::Authentication</h1>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Thincloud Authentication</h1>
+          <h2>A Rails Engine to provide authentication for Thincloud applications.</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/newleaders/thincloud-authentication/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/newleaders/thincloud-authentication/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/newleaders/thincloud-authentication" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>Thincloud::Authentication</h1>
 
 <p><a href="http://travis-ci.org/newleaders/thincloud-authentication"><img src="https://secure.travis-ci.org/newleaders/thincloud-authentication.png" alt="Build Status"></a> <a href="https://codeclimate.com/github/newleaders/thincloud-authentication"><img src="https://codeclimate.com/badge.png" alt="Code Climate"></a></p>
 
@@ -70,7 +74,7 @@
 
 <ul>
 <li>Mount the engine in your <code>config/routes.rb</code> file:</li>
-</ul><div class="highlight"><pre><span class="n">mount</span> <span class="no">Thincloud</span><span class="o">::</span><span class="no">Authentication</span><span class="o">::</span><span class="no">Engine</span> <span class="o">=&gt;</span> <span class="s2">"/auth"</span><span class="p">,</span> <span class="n">as</span><span class="p">:</span> <span class="s2">"auth_engine"</span>
+</ul><div class="highlight"><pre><span class="n">mount</span> <span class="ss">Thincloud</span><span class="p">:</span><span class="ss">:Authentication</span><span class="o">::</span><span class="no">Engine</span> <span class="o">=&gt;</span> <span class="s2">"/auth"</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="s2">"auth_engine"</span>
 </pre></div>
 
 <p>Using the example above, you may now login or signup at <a href="http://lvh.me:3000/auth">http://lvh.me:3000/auth</a>.</p>
@@ -91,7 +95,7 @@
 
 <p>Set the <code>layout</code> option to customize the layout used by all thincloud-authentication views:</p>
 
-<div class="highlight"><pre><span class="no">Thincloud</span><span class="o">::</span><span class="no">Authentication</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<div class="highlight"><pre><span class="ss">Thincloud</span><span class="p">:</span><span class="ss">:Authentication</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="n">config</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="s2">"other"</span>
 <span class="k">end</span>
 </pre></div>
@@ -100,7 +104,7 @@
 
 <p>Set the <code>mailer_sender</code> option to customize the "From" address of the emails sent from the system:</p>
 
-<div class="highlight"><pre><span class="no">Thincloud</span><span class="o">::</span><span class="no">Authentication</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<div class="highlight"><pre><span class="ss">Thincloud</span><span class="p">:</span><span class="ss">:Authentication</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="n">config</span><span class="o">.</span><span class="n">mailer_sender</span> <span class="o">=</span> <span class="s2">"app@example.com"</span>
 <span class="k">end</span>
 </pre></div>
@@ -129,16 +133,16 @@
 </ul>
 </li>
 <li>Add the file <code>config/initializers/thincloud_authentication.rb</code> with the following contents:</li>
-</ul><div class="highlight"><pre><span class="no">Thincloud</span><span class="o">::</span><span class="no">Authentication</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</ul><div class="highlight"><pre><span class="ss">Thincloud</span><span class="p">:</span><span class="ss">:Authentication</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="n">config</span><span class="o">.</span><span class="n">providers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">linkedin</span><span class="p">:</span> <span class="p">{</span>
-      <span class="n">scopes</span><span class="p">:</span> <span class="s2">"r_emailaddress r_basicprofile"</span><span class="p">,</span>
-      <span class="n">fields</span><span class="p">:</span> <span class="o">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"email-address"</span><span class="p">,</span> <span class="s2">"first-name"</span><span class="p">,</span> <span class="s2">"last-name"</span><span class="p">,</span> <span class="s2">"headline"</span><span class="p">,</span>
+    <span class="ss">linkedin</span><span class="p">:</span> <span class="p">{</span>
+      <span class="ss">scopes</span><span class="p">:</span> <span class="s2">"r_emailaddress r_basicprofile"</span><span class="p">,</span>
+      <span class="ss">fields</span><span class="p">:</span> <span class="o">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"email-address"</span><span class="p">,</span> <span class="s2">"first-name"</span><span class="p">,</span> <span class="s2">"last-name"</span><span class="p">,</span> <span class="s2">"headline"</span><span class="p">,</span>
                <span class="s2">"industry"</span><span class="p">,</span> <span class="s2">"picture-url"</span><span class="p">,</span> <span class="s2">"location"</span><span class="p">,</span> <span class="s2">"public-profile-url"</span><span class="o">]</span>
     <span class="p">},</span>
     <span class="n">stripe_connect</span><span class="p">:</span> <span class="p">{</span>
       <span class="nb">require</span><span class="p">:</span> <span class="s2">"omniauth-stripe-connect"</span><span class="p">,</span>
-      <span class="n">scopes</span><span class="p">:</span> <span class="s2">"read_write"</span>
+      <span class="ss">scopes</span><span class="p">:</span> <span class="s2">"read_write"</span>
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="k">end</span>
@@ -148,9 +152,9 @@
 
 <p>If you want to customize the routes (remove the <code>/auth</code> prefix), you may add the following to your <code>config/routes.rb</code> file:</p>
 
-<div class="highlight"><pre><span class="n">get</span> <span class="s2">"signup"</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="s2">"thincloud/authentication/registrations#new"</span><span class="p">,</span> <span class="n">as</span><span class="p">:</span> <span class="s2">"signup"</span>
-<span class="n">get</span> <span class="s2">"login"</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="s2">"thincloud/authentication/sessions#new"</span><span class="p">,</span> <span class="n">as</span><span class="p">:</span> <span class="s2">"login"</span>
-<span class="n">delete</span> <span class="s2">"logout"</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="s2">"thincloud/authentication/sessions#destroy"</span><span class="p">,</span> <span class="n">as</span><span class="p">:</span> <span class="s2">"logout"</span>
+<div class="highlight"><pre><span class="n">get</span> <span class="s2">"signup"</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s2">"thincloud/authentication/registrations#new"</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="s2">"signup"</span>
+<span class="n">get</span> <span class="s2">"login"</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s2">"thincloud/authentication/sessions#new"</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="s2">"login"</span>
+<span class="n">delete</span> <span class="s2">"logout"</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s2">"thincloud/authentication/sessions#destroy"</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="s2">"logout"</span>
 </pre></div>
 
 <p>Using the example above, you will have the following routes locally:</p>
@@ -164,7 +168,7 @@
 <code>logout_url</code> points to "/logout" - Make sure to use the <code>delete</code> method to logout.</li>
 </ul><h3>Redirection</h3>
 
-<p>You can customize the paths used to redirect users after login, logout and registration by overriding the corresponding methods in your ApplicationController, or specific controllers, as needed.</p>
+<p>You can customize the paths used to redirect users after login, logout, registration and email verification by overriding the corresponding methods in your ApplicationController, or specific controllers, as needed.</p>
 
 <ul>
 <li>
@@ -173,6 +177,8 @@
 <code>after_logout_path</code> is used after the user logs out.</li>
 <li>
 <code>after_registration_path</code> is used after the user registers.</li>
+<li>
+<code>after_verification_path</code> is used after the user verifies their email.</li>
 </ul><h2>TODO</h2>
 
 <ul>
@@ -194,14 +200,14 @@
 <li>Copyright (c) 2012 New Leaders (<a href="opensource@newleaders.com">opensource@newleaders.com</a>)</li>
 <li><a href="https://newleaders.com">https://newleaders.com</a></li>
 </ul>
-      </section>
-    </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/newleaders">newleaders</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-              <script type="text/javascript">
+        </section>
+
+        <footer>
+          Thincloud Authentication is maintained by <a href="https://github.com/newleaders">newleaders</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+                  <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -212,5 +218,7 @@
             } catch(err) {}
           </script>
 
+      </div>
+    </div>
   </body>
 </html>
