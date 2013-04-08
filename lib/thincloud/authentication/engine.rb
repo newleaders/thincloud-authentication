@@ -1,17 +1,25 @@
 module Thincloud
   module Authentication
+
     # Public: Initialize the Rails engine
     class Engine < ::Rails::Engine
       isolate_namespace Thincloud::Authentication
+
+      require "thincloud/authentication/configuration"
+
+      initializer "thincloud.authentication.require_dependencies" do
+        require_dependency "thincloud/authentication/authenticatable_controller"
+        require_dependency "thincloud/authentication/identifiable_user"
+      end
 
       initializer "thincloud.authentication.omniauth.middleware" do |app|
         require "omniauth"
         require "omniauth-identity"
 
-        config = Thincloud::Authentication.configuration || Configuration.new
-        strategies = config.providers.keys
+        conf = Thincloud::Authentication.configuration || Configuration.new
+        strategies = conf.providers.keys
         strategies.each do |strategy|
-          lib = config.providers[strategy][:require] || "omniauth-#{strategy}"
+          lib = conf.providers[strategy][:require] || "omniauth-#{strategy}"
           require lib
         end
 
@@ -23,8 +31,8 @@ module Thincloud
           strategies.each do |strategy|
             provider strategy, ENV["#{strategy.to_s.upcase}_CONSUMER_KEY"],
               ENV["#{strategy.to_s.upcase}_CONSUMER_SECRET"],
-              fields: config.providers[strategy][:fields],
-              scope: config.providers[strategy][:scopes]
+              fields: conf.providers[strategy][:fields],
+              scope: conf.providers[strategy][:scopes]
           end
         end
       end
@@ -53,12 +61,16 @@ module Thincloud
       end
 
       initializer "thincloud.authentication.user" do
-        ::User.send :include, Thincloud::Authentication::IdentifiableUser
+        config.to_prepare do
+          ::User.send :include, Thincloud::Authentication::IdentifiableUser
+        end
       end
 
       initializer "thincloud.authentication.action_controller" do
-        ActionController::Base.send :include,
-          Thincloud::Authentication::AuthenticatableController
+        config.to_prepare do
+          ActionController::Base.send :include,
+            Thincloud::Authentication::AuthenticatableController
+        end
       end
 
       config.generators do |g|
