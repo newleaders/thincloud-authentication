@@ -4,6 +4,13 @@ module Thincloud
     class Engine < ::Rails::Engine
       isolate_namespace Thincloud::Authentication
 
+      require "thincloud/authentication/configuration"
+
+      initializer "thincloud.authentication.require_dependencies" do
+        require_dependency "thincloud/authentication/authenticatable_controller"
+        require_dependency "thincloud/authentication/identifiable_user"
+      end
+
       initializer "thincloud.authentication.omniauth.middleware" do |app|
         require "omniauth"
         require "omniauth-identity"
@@ -53,12 +60,16 @@ module Thincloud
       end
 
       initializer "thincloud.authentication.user" do
-        ::User.send :include, Thincloud::Authentication::IdentifiableUser
+        config.to_prepare do
+          ::User.send :include, Thincloud::Authentication::IdentifiableUser
+        end
       end
 
       initializer "thincloud.authentication.action_controller" do
-        ActionController::Base.send :include,
-          Thincloud::Authentication::AuthenticatableController
+        config.to_prepare do
+          ActionController::Base.send :include,
+            Thincloud::Authentication::AuthenticatableController
+        end
       end
 
       config.generators do |g|
