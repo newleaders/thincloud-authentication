@@ -1,5 +1,6 @@
 module Thincloud
   module Authentication
+
     # Public: Initialize the Rails engine
     class Engine < ::Rails::Engine
       isolate_namespace Thincloud::Authentication
@@ -15,10 +16,10 @@ module Thincloud
         require "omniauth"
         require "omniauth-identity"
 
-        config = Thincloud::Authentication.configuration || Configuration.new
-        strategies = config.providers.keys
+        conf = Thincloud::Authentication.configuration || Configuration.new
+        strategies = conf.providers.keys
         strategies.each do |strategy|
-          lib = config.providers[strategy][:require] || "omniauth-#{strategy}"
+          lib = conf.providers[strategy][:require] || "omniauth-#{strategy}"
           require lib
         end
 
@@ -30,8 +31,8 @@ module Thincloud
           strategies.each do |strategy|
             provider strategy, ENV["#{strategy.to_s.upcase}_CONSUMER_KEY"],
               ENV["#{strategy.to_s.upcase}_CONSUMER_SECRET"],
-              fields: config.providers[strategy][:fields],
-              scope: config.providers[strategy][:scopes]
+              fields: conf.providers[strategy][:fields],
+              scope: conf.providers[strategy][:scopes]
           end
         end
       end
