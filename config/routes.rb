@@ -1,5 +1,5 @@
 Thincloud::Authentication::Engine.routes.draw do
-  match ":provider/callback" => "registrations#create", as: "auth_callback"
+  post ":provider/callback", to: "registrations#create", as: "auth_callback"
   get "failure", to: "sessions#new", as: "auth_failure"
 
   get "login", to: "sessions#new", as: "login"
