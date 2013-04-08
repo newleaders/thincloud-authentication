@@ -81,12 +81,23 @@ module Thincloud::Authentication
     # Returns: An instance of `Identity`.
     def create_identity_from_request
       # params[:identity] exists when creating a local identity provider
-      Identity.new(params[:identity]).tap do |identity|
+      Identity.new(identity_params).tap do |identity|
         identity.user = User.create
         # omniauth exists if coming from a 3rd party provider like LinkedIn
         identity.apply_omniauth(omniauth) if omniauth
         identity.save
       end
+    end
+
+    # Private: Provide strong_parameters support
+    # :token, :auth_key, :provider,
+    def identity_params
+      keys = [
+        :name, :email, :password,
+        :password_confirmation, :verification_token
+      ]
+
+      params.require(:identity).permit(*keys)
     end
   end
 end
