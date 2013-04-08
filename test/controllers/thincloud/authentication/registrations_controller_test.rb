@@ -11,7 +11,7 @@ module Thincloud::Authentication
 
     describe "POST create" do
       describe "with errors" do
-        before { post :create, identity: {} }
+        before { post :create, identity: { email: "" } }
 
         it { assert_response :success }
         it { assert_template :new }
@@ -133,7 +133,7 @@ module Thincloud::Authentication
             RegistrationsController.any_instance.stubs(:omniauth).returns(
               auth_hash
             )
-            post :create
+            post :create, identity: { email: "foo2@bar2.com" }
           end
 
           it { assert_response :redirect }
