@@ -5,9 +5,6 @@ module Thincloud::Authentication
 
     belongs_to :user
 
-    # Limit the ability to mass-assign sensitive fields.
-    attr_accessible :name, :email, :password, :password_confirmation
-
     validates :name, presence: true
     validates :email, presence: true, uniqueness: true, format: /@/
 
