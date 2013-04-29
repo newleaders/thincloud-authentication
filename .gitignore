@@ -9,3 +9,5 @@ test/dummy/tmp/
 test/dummy/.sass-cache
 coverage/
 .rbx/
+bin/
+vendor/bundle/
