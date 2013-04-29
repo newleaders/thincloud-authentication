@@ -4,8 +4,13 @@ module Thincloud::Authentication
   describe RegistrationsMailer do
 
     describe "#verification_token" do
-      let(:identity) { Identity.new(name: "Name", email: "email@example.com") }
-      let(:mail) { RegistrationsMailer.verification_token(identity) }
+      let(:identity) {
+        Identity.create!(
+          name: "Name", email: "email@example.com", user_id: 123,
+          password: "test123", password_confirmation: "test123"
+        )
+      }
+      let(:mail) { RegistrationsMailer.verification_token(identity.id) }
 
       it { mail.subject.must_equal "Identity Verification" }
       it { mail.to.must_equal ["email@example.com"] }
