@@ -41,7 +41,7 @@ module Thincloud::Authentication
           post :create
         end
 
-        it { session[:uid].wont_be_nil }
+        it { cookies.signed[:uid].must_equal user.id }
         it { assert_response :redirect }
         it { assert_redirected_to "/" }
         it { flash[:notice].must_equal "You have been logged in." }
@@ -110,7 +110,7 @@ module Thincloud::Authentication
 
           it { assert_response :redirect }
           it { assert_redirected_to "/" }
-          it { session[:uid].must_be_nil }
+          it { cookies.signed[:uid].must_be_nil }
           it { flash[:notice].must_equal "Check your email to verify your registration." }
           it { User.count.must_equal 1 }
           it { Identity.count.must_equal 1 }
@@ -138,7 +138,7 @@ module Thincloud::Authentication
 
           it { assert_response :redirect }
           it { assert_redirected_to "/" }
-          it { session[:uid].must_equal assigns[:identity].user.id }
+          it { cookies.signed[:uid].must_equal assigns[:identity].user.id }
           it { flash[:alert].must_be_nil }
           it { User.count.must_equal 1 }
           it { Identity.count.must_equal 1 }
