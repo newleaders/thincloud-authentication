@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       resources :registrations, only: [:new, :create]
       get "signup", to: "registrations#new", as: "signup"
       get "verify/:token", to: "registrations#verify", as: "verify_token"
+
+      resources :passwords, only: [:new, :edit, :create, :update]
     end
   end
 
