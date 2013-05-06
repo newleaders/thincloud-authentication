@@ -104,5 +104,19 @@ module Thincloud::Authentication
       it { identity.provider.must_equal "linkedin" }
       it { identity.uid.must_equal "xxsdflkjsdf" }
     end
+
+    describe "#generate_password_token!" do
+      before do
+        Identity.any_instance.stubs(:save!)
+      end
+
+      it "generates a token and records the time" do
+        identity.password_reset_token.must_be_nil
+        identity.password_reset_sent_at.must_be_nil
+        identity.generate_password_token!
+        identity.password_reset_token.wont_be_nil
+        identity.password_reset_sent_at.wont_be_nil
+      end
+    end
   end
 end
