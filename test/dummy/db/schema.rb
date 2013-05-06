@@ -11,19 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120919182522) do
+ActiveRecord::Schema.define(:version => 20130505230811) do
 
   create_table "thincloud_authentication_identities", :force => true do |t|
-    t.integer  "user_id",                                    :null => false
-    t.string   "provider",           :default => "identity", :null => false
+    t.integer  "user_id",                                        :null => false
+    t.string   "provider",               :default => "identity", :null => false
     t.string   "uid"
-    t.string   "name",                                       :null => false
-    t.string   "email",                                      :null => false
-    t.string   "password_digest",                            :null => false
+    t.string   "name",                                           :null => false
+    t.string   "email",                                          :null => false
+    t.string   "password_digest",                                :null => false
     t.string   "verification_token"
     t.datetime "verified_at"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "thincloud_authentication_identities", ["email"], :name => "index_thincloud_authentication_identities_on_email"
