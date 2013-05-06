@@ -9,6 +9,7 @@ module Thincloud::Authentication
 
         it { assert_response :success }
         it { assert_template :new }
+        it { cookies.signed[:uid].must_be_nil }
       end
 
       describe "when logged in" do
@@ -26,6 +27,7 @@ module Thincloud::Authentication
 
       it { assert_redirected_to "/" }
       it { flash[:notice].must_equal "You have been logged out." }
+      it { cookies.signed[:uid].must_be_nil }
     end
 
     describe "GET authenticated" do
@@ -40,7 +42,7 @@ module Thincloud::Authentication
       describe "logged in" do
         before do
           User.stubs(:find).with(123).returns(User.new)
-          session[:uid] = 123
+          cookies.signed[:uid] = 123
           get :authenticated
         end
 
