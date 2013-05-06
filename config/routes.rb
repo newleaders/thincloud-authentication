@@ -10,5 +10,7 @@ Thincloud::Authentication::Engine.routes.draw do
   get "signup", to: "registrations#new", as: "signup"
   get "verify/:token", to: "registrations#verify", as: "verify_token"
 
+  resources :passwords, only: [:new, :edit, :create, :update]
+
   root to: "sessions#new"
 end
