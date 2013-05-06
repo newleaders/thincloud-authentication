@@ -17,8 +17,8 @@ module Thincloud
       #
       # Returns: An instance of `User` or `nil`.
       def current_user
-        return nil if session[:uid].blank?
-        @current_user ||= User.find(session[:uid])
+        return nil if cookies.signed[:uid].blank?
+        @current_user ||= User.find(cookies.signed[:uid])
       end
 
       # Protected:  Determine if the current request has a logged in user.
@@ -48,7 +48,11 @@ module Thincloud
       # Returns: The `id` of the provided user.
       def login_as(user)
         reset_session  # avoid session fixation
-        session[:uid] = user.id
+        cookies.signed[:uid] = {
+          value: user.id,
+          secure: request.ssl?,
+          httponly: true
+        }
       end
 
       # Protected: Clear the session of an authenticated user.
@@ -56,6 +60,7 @@ module Thincloud
       # Returns: A new empty session instance.
       def logout
         reset_session
+        cookies.delete(:uid)
       end
 
       # Protected: Provides the URL to redirect to after logging in.
