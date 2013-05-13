@@ -11,12 +11,13 @@ module Thincloud
 
     # Public: Configuration options for the Thincloud::Authentication module
     class Configuration
-      attr_accessor :layout, :providers, :mailer_sender
+      attr_accessor :layout, :providers, :mailer_sender, :cookie_options
 
       def initialize
         @layout = "application"
         @providers = {}
         @mailer_sender = "app@example.com"
+        @cookie_options = {}
       end
     end
   end

@@ -10,11 +10,14 @@ describe Thincloud::Authentication::Configuration do
   it { config.must_respond_to :providers= }
   it { config.must_respond_to :mailer_sender }
   it { config.must_respond_to :mailer_sender= }
+  it { config.must_respond_to :cookie_options }
+  it { config.must_respond_to :cookie_options= }
 
   describe "defaults" do
     it { config.layout.must_equal "application" }
     it { config.providers.must_equal Hash.new }
     it { config.mailer_sender.must_equal "app@example.com" }
+    it { config.cookie_options.must_equal Hash.new }
   end
 
   describe "layout" do
