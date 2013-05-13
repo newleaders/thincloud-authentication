@@ -159,7 +159,6 @@ You can customize the paths used to redirect users after login, logout, registra
 
 ## TODO
 
-* Add "forgot password" functionality
 * Add multiple, configurable strategy options
 * Add a configuration option to customize the mailers
 
