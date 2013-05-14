@@ -82,6 +82,16 @@ Thincloud::Authentication.configure do |config|
 end
 ```
 
+### Cookies
+
+Set the `cookie_options` option to customize the options that get passed to the authentication cookies:
+
+```ruby
+Thincloud::Authentication.configure do |config|
+  config.cookie_options = { secure: true, domain: :all }
+end
+```
+
 
 ### Additional provider strategies
 

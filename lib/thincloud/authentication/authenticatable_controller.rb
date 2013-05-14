@@ -52,7 +52,7 @@ module Thincloud
           value: user.id,
           secure: request.ssl?,
           httponly: true
-        }
+        }.merge(Thincloud::Authentication.configuration.cookie_options)
       end
 
       # Protected: Clear the session of an authenticated user.
