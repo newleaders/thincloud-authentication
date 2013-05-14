@@ -156,10 +156,20 @@ You can customize the paths used to redirect users after login, logout, registra
 * `after_logout_path` is used after the user logs out.
 * `after_registration_path` is used after the user registers.
 * `after_verification_path` is used after the user verifies their email.
+* `after_password_update_path` is used after the user updates their password.
+
+### Working with Identities
+
+Thincloud Authentication provides a few service objects to assist with creating and updating Identities:
+
+* `CreateInvitationForUser.call(user, name: "Test Name", email: "test@test.com")` is used to create a new Identity for a user and send an email with an invitation URL which allows the user to choose a password.
+* `UpdateIdentityPassword.call(identity, password: "s3kr1tz!", password_confirmation: "s3kr1tz!")` is used to update the password for an existing Identity.
+
+Both of the methods above will return `true` or `false`.
+
 
 ## TODO
 
-* Add "forgot password" functionality
 * Add multiple, configurable strategy options
 * Add a configuration option to customize the mailers
 
