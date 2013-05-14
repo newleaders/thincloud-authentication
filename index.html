@@ -109,6 +109,15 @@
 <span class="k">end</span>
 </pre></div>
 
+<h3>Cookies</h3>
+
+<p>Set the <code>cookie_options</code> option to customize the options that get passed to the authentication cookies:</p>
+
+<div class="highlight"><pre><span class="ss">Thincloud</span><span class="p">:</span><span class="ss">:Authentication</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">cookie_options</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">secure</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">domain</span><span class="p">:</span> <span class="ss">:all</span> <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+
 <h3>Additional provider strategies</h3>
 
 <ul>
@@ -179,10 +188,22 @@
 <code>after_registration_path</code> is used after the user registers.</li>
 <li>
 <code>after_verification_path</code> is used after the user verifies their email.</li>
-</ul><h2>TODO</h2>
+<li>
+<code>after_password_update_path</code> is used after the user updates their password.</li>
+</ul><h3>Working with Identities</h3>
+
+<p>Thincloud Authentication provides a few service objects to assist with creating and updating Identities:</p>
 
 <ul>
-<li>Add "forgot password" functionality</li>
+<li>
+<code>CreateInvitationForUser.call(user, name: "Test Name", email: "test@test.com")</code> is used to create a new Identity for a user and send an email with an invitation URL which allows the user to choose a password.</li>
+<li>
+<code>UpdateIdentityPassword.call(identity, password: "s3kr1tz!", password_confirmation: "s3kr1tz!")</code> is used to update the password for an existing Identity.</li>
+</ul><p>Both of the methods above will return <code>true</code> or <code>false</code>.</p>
+
+<h2>TODO</h2>
+
+<ul>
 <li>Add multiple, configurable strategy options</li>
 <li>Add a configuration option to customize the mailers</li>
 </ul><h2>Contributing</h2>
