@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get "verify/:token", to: "registrations#verify", as: "verify_token"
 
       resources :passwords, only: [:new, :edit, :create, :update]
+      get "invitations/:id", to: "passwords#edit", as: "invitation"
     end
   end
 
