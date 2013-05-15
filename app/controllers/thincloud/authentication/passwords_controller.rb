@@ -25,6 +25,7 @@ module Thincloud::Authentication
         login_as @identity.user
         redirect_to after_password_update_path
       else
+        flash.now[:alert] = "Unable to update password. Please try again."
         render :edit
       end
     end

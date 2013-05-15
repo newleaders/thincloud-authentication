@@ -4,8 +4,10 @@ module Thincloud::Authentication
   class CreateInvitationForUser
 
     def self.call(user, params)
+      password = SecureRandom.uuid
       identity = Identity.create!(user: user, name: params[:name],
-                                  email: params[:email], password_digest: 0)
+                                  email: params[:email], password: password,
+                                  password_confirmation: password)
       Identity.verify!(identity.verification_token)
       identity.generate_password_token!
       InvitationsMailer.new_invitation(identity.id).deliver
