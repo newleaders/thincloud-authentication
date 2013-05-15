@@ -7,6 +7,8 @@ module Thincloud::Authentication
 
     validates :name, presence: true
     validates :email, presence: true, uniqueness: true, format: /@/
+    validates :password, presence: { if: :password_required? },
+      confirmation: { if: :password_required? }
 
     # Ensure that a `verification_token` exists for new records.
     after_initialize do
@@ -15,7 +17,7 @@ module Thincloud::Authentication
 
     # Only validate password if the 'provider' is 'identity'.
     before_validation do
-      self.password_digest = 0 unless provider == "identity"
+      self.password_digest = 0 unless identity_provider?
     end
 
     # Public: Use a helpful attribute name when displaying errors.
@@ -87,6 +89,20 @@ module Thincloud::Authentication
       self.password_reset_token = SecureRandom.urlsafe_base64
       self.password_reset_sent_at = Time.zone.now
       save!
+    end
+
+    # Public: Determine if the provider is 'identity'
+    #
+    # Returns: true or false
+    def identity_provider?
+      provider == "identity"
+    end
+
+    # Public: Determine if the password must be provided
+    #
+    # Returns: true or false
+    def password_required?
+      identity_provider? && password_reset_token.blank?
     end
   end
 end

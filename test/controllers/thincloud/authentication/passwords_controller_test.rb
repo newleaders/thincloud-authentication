@@ -68,6 +68,7 @@ module Thincloud::Authentication
 
         it { assert_response :success }
         it { assert_template :edit }
+        it { flash[:alert].must_match "Unable to update password." }
         it { assigns[:identity].must_equal @identity }
         it { assigns[:identity].errors[:password].wont_be_empty }
       end

@@ -2,6 +2,13 @@
   <fieldset>
     <legend>Password Reset</legend>
 
+    <% if alert.present? %>
+    <div class="alert alert-block alert-error">
+      <h4><i class="icon-warning-sign"></i> Error</h4>
+      <%= alert %>
+    </div>
+    <% end %>
+
     <div class="control-group">
       <%= f.label :password, "Password", class: "control-label" %>
 
