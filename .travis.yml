@@ -2,8 +2,12 @@ language: ruby
 rvm:
   - 1.9.2
   - 1.9.3
+  - 2.0.0
   - jruby-19mode
   - rbx-19mode
+matrix:
+  allow_failures:
+    - rvm: rbx-19mode
 env:
   - CI=true RAILS_ENV=test JRUBY_OPTS=--1.9 RBXOPT=-X19 DB=mysql
   - CI=true RAILS_ENV=test JRUBY_OPTS=--1.9 RBXOPT=-X19 DB=postgres

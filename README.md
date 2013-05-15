@@ -16,6 +16,7 @@ This gem has been tested against the following Ruby versions:
 
 * MRI 1.9.2
 * MRI 1.9.3
+* MRI 2.0.0
 * JRuby 1.6+ (with `JRUBY_OPTS=--1.9`)
 * Rubinius 2.0.0dev (with `RBXOPT=-X19`)
 

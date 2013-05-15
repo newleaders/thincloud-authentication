@@ -28,7 +28,7 @@ module Thincloud::Authentication
         email = ActionMailer::Base.deliveries.first
         email.to.must_include "foo@bar.com"
         email.subject.must_equal "New account invitation"
-        email.body.encoded.must_match %r(/invitations/\w+{10,})
+        email.body.encoded.must_match %r(/invitations/[\w\-]+{10,})
       end
     end
 
