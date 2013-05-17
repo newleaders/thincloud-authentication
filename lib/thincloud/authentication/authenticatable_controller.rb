@@ -60,7 +60,7 @@ module Thincloud
       # Returns: A new empty session instance.
       def logout
         reset_session
-        cookies.delete(:uid)
+        delete_cookie_key :uid
       end
 
       # Protected: Provides the URL to redirect to after logging in.
@@ -96,6 +96,16 @@ module Thincloud
       # Returns: A string.
       def after_password_update_path
         main_app.root_url
+      end
+
+
+    private
+
+      # Private: Delete a cookie, taking the domain in to account
+      def delete_cookie_key(key)
+        domain = Thincloud::Authentication.configuration.cookie_options[:domain]
+        options = domain ? { domain: domain } : Hash.new
+        cookies.delete(key, options)
       end
 
     end
