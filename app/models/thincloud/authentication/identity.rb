@@ -102,7 +102,7 @@ module Thincloud::Authentication
     #
     # Returns: true or false
     def password_required?
-      identity_provider? && password_reset_token.blank?
+      identity_provider? && (!password.nil? || !password_confirmation.nil?)
     end
   end
 end
