@@ -5,9 +5,8 @@ module Thincloud::Authentication
     def self.call(identity, params)
       identity.password = params[:password]
       identity.password_confirmation = params[:password_confirmation]
-      identity.password_reset_token = nil
-      identity.password_reset_sent_at = nil
       identity.save!
+      identity.clear_password_reset!
     rescue ActiveRecord::RecordInvalid
       identity.reload
       false
