@@ -115,7 +115,7 @@ module Thincloud::Authentication
     # Returns: true or false
     def password_required?
       identity_provider? && (new_record? || password_reset_token.present? ||
-        (password.present? || password_confirmation.present?))
+        password.present? || password_confirmation.present?)
     end
   end
 end

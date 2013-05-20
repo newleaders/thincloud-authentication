@@ -141,7 +141,8 @@ module Thincloud::Authentication
           it     { identity.password_required?.must_equal true }
         end
 
-        describe "without password or confirmation provided" do
+        describe "without password or confirmation on persisted identity" do
+          before { identity.stubs(:new_record?).returns(false) }
           it { identity.password_required?.must_equal false }
         end
       end
@@ -149,6 +150,30 @@ module Thincloud::Authentication
       describe "when provider is not identity" do
         before { identity.expects(:identity_provider?).returns(false) }
         it     { identity.password_required?.must_equal false }
+      end
+    end
+
+
+    describe "resetting password manually" do
+      before do
+        identity.password = identity.password_confirmation = "abc123"
+        identity.save
+      end
+
+      it { identity.authenticate("abc123").must_equal identity }
+
+      describe "after changing non-password values" do
+        before do
+          identity.name = "foobar"
+          identity.password = identity.password_confirmation = ""
+          identity.save
+        end
+
+        it { identity.name.must_equal "foobar" }
+
+        it "does not change the password" do
+          identity.authenticate("abc123").must_equal identity
+        end
       end
     end
   end
