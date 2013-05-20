@@ -9,7 +9,7 @@ module Thincloud::Authentication
                                   email: params[:email], password: password,
                                   password_confirmation: password)
       Identity.verify!(identity.verification_token)
-      identity.generate_password_token!
+      identity.generate_password_reset!
       InvitationsMailer.new_invitation(identity.id).deliver
       true
     rescue ActiveRecord::RecordInvalid

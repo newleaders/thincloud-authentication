@@ -105,7 +105,7 @@ module Thincloud::Authentication
       it { identity.uid.must_equal "xxsdflkjsdf" }
     end
 
-    describe "#generate_password_token!" do
+    describe "#generate_password_reset!" do
       before do
         Identity.any_instance.stubs(:save!)
       end
@@ -113,7 +113,7 @@ module Thincloud::Authentication
       it "generates a token and records the time" do
         identity.password_reset_token.must_be_nil
         identity.password_reset_sent_at.must_be_nil
-        identity.generate_password_token!
+        identity.generate_password_reset!
         identity.password_reset_token.wont_be_nil
         identity.password_reset_sent_at.wont_be_nil
       end

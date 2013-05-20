@@ -85,9 +85,20 @@ module Thincloud::Authentication
     # Returns: true
     #
     # Raises: ActiveRecord::RecordInvalid
-    def generate_password_token!
+    def generate_password_reset!
       self.password_reset_token = SecureRandom.urlsafe_base64
       self.password_reset_sent_at = Time.zone.now
+      save!
+    end
+
+    # Public: Clear password reset fields, reset password_required? requirement
+    #
+    # Returns: true
+    #
+    # Raises: ActiveRecord::RecordInvalid
+    def clear_password_reset!
+      self.password_reset_token = nil
+      self.password_reset_sent_at = nil
       save!
     end
 
