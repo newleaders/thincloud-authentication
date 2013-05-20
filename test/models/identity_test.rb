@@ -62,13 +62,13 @@ module Thincloud::Authentication
 
       describe "when found" do
         before do
-          Identity.stubs(:find_by_verification_token!).with("token").returns(
-            identity
-          )
-          Identity.any_instance.stubs(:save).returns(identity)
+          @identity = Identity.create!(name: "Test", email: "foo@bar.com",
+                                       user_id: 123, password: "test",
+                                       password_confirmation: "test")
+          @identity.update_column :verification_token, "abc123"
         end
 
-        it { Identity.verify!("token").must_equal identity }
+        it { Identity.verify!("abc123").must_equal @identity }
       end
     end
 

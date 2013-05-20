@@ -42,13 +42,14 @@ module Thincloud::Authentication
     #
     # Returns: An instance of the found `Identity`.
     # Raises: ActiveRecord::RecordNotFound if the `token` cannot be retrieved.
+    #         ActiveRecord::RecordInvalid if the record cannot be saved.
     def self.verify!(token)
       find_by_verification_token!(token).tap do |identity|
         # ensure 'uid' exists, needed for 'identity' provider
         identity.uid = identity.id if identity.uid.blank?
         identity.verification_token = nil
         identity.verified_at = Time.zone.now
-        identity.save
+        identity.save!
       end
     end
 
