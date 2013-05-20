@@ -8,7 +8,7 @@ module Thincloud::Authentication
     validates :name, presence: true
     validates :email, presence: true, uniqueness: true, format: /@/
     validates :password, presence: { if: :password_required? },
-      confirmation: { if: :password_required? }
+      confirmation: { if: :password_confirmation_required? }
 
     # Ensure that a `verification_token` exists for new records.
     after_initialize do
@@ -115,6 +115,15 @@ module Thincloud::Authentication
     # Returns: true or false
     def password_required?
       identity_provider? && (new_record? || password_reset_token.present?)
+    end
+
+    # Public: Determine if the password confirmation must be provided
+    #
+    # Returns: true or false
+    def password_confirmation_required?
+      password_required? || (
+        password.present? || password_confirmation.present?
+      )
     end
   end
 end

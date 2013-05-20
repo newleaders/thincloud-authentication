@@ -118,5 +118,41 @@ module Thincloud::Authentication
         identity.password_reset_sent_at.wont_be_nil
       end
     end
+
+    describe "#password_confirmation_required?" do
+      describe "when password_required? is false" do
+        before do
+          identity.stubs(:password_required?).returns(false)
+        end
+
+        describe "when no password or confirmation is provided" do
+          it { identity.password_confirmation_required?.must_equal false }
+        end
+
+        describe "when password is provided" do
+          before do
+            identity.password = "foo"
+          end
+
+          it { identity.password_confirmation_required?.must_equal true }
+        end
+
+        describe "when password_confirmation is provided" do
+          before do
+            identity.password_confirmation = "foo"
+          end
+
+          it { identity.password_confirmation_required?.must_equal true }
+        end
+      end
+
+      describe "when password_required? is true" do
+        before do
+          identity.stubs(:password_required?).returns(true)
+        end
+
+        it { identity.password_confirmation_required?.must_equal true }
+      end
+    end
   end
 end
