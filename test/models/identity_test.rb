@@ -62,13 +62,13 @@ module Thincloud::Authentication
 
       describe "when found" do
         before do
-          Identity.stubs(:find_by_verification_token!).with("token").returns(
-            identity
-          )
-          Identity.any_instance.stubs(:save).returns(identity)
+          @identity = Identity.create!(name: "Test", email: "foo@bar.com",
+                                       user_id: 123, password: "test",
+                                       password_confirmation: "test")
+          @identity.update_column :verification_token, "abc123"
         end
 
-        it { Identity.verify!("token").must_equal identity }
+        it { Identity.verify!("abc123").must_equal @identity }
       end
     end
 
@@ -105,7 +105,7 @@ module Thincloud::Authentication
       it { identity.uid.must_equal "xxsdflkjsdf" }
     end
 
-    describe "#generate_password_token!" do
+    describe "#generate_password_reset!" do
       before do
         Identity.any_instance.stubs(:save!)
       end
@@ -113,9 +113,45 @@ module Thincloud::Authentication
       it "generates a token and records the time" do
         identity.password_reset_token.must_be_nil
         identity.password_reset_sent_at.must_be_nil
-        identity.generate_password_token!
+        identity.generate_password_reset!
         identity.password_reset_token.wont_be_nil
         identity.password_reset_sent_at.wont_be_nil
+      end
+    end
+
+    describe "#password_confirmation_required?" do
+      describe "when password_required? is false" do
+        before do
+          identity.stubs(:password_required?).returns(false)
+        end
+
+        describe "when no password or confirmation is provided" do
+          it { identity.password_confirmation_required?.must_equal false }
+        end
+
+        describe "when password is provided" do
+          before do
+            identity.password = "foo"
+          end
+
+          it { identity.password_confirmation_required?.must_equal true }
+        end
+
+        describe "when password_confirmation is provided" do
+          before do
+            identity.password_confirmation = "foo"
+          end
+
+          it { identity.password_confirmation_required?.must_equal true }
+        end
+      end
+
+      describe "when password_required? is true" do
+        before do
+          identity.stubs(:password_required?).returns(true)
+        end
+
+        it { identity.password_confirmation_required?.must_equal true }
       end
     end
   end

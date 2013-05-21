@@ -9,7 +9,7 @@ module Thincloud::Authentication
     describe "without a valid email" do
       before do
         Identity.expects(:find_by_email).with("foo@bar.com")
-        Identity.any_instance.expects(:generate_password_token!).never
+        Identity.any_instance.expects(:generate_password_reset!).never
         PasswordsMailer.expects(:password_reset).never
       end
 
@@ -25,7 +25,7 @@ module Thincloud::Authentication
       before do
         Identity.stubs(:find).with(999).returns(identity)
         Identity.stubs(:find_by_email).with("foo@bar.com").returns(identity)
-        identity.expects(:generate_password_token!)
+        identity.expects(:generate_password_reset!)
       end
 
       it "sends an email with the reset token" do
