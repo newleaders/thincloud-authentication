@@ -154,10 +154,13 @@ module Thincloud::Authentication
     end
 
 
-    describe "resetting password manually" do
+    describe "manually update password" do
       before do
+        identity.user = User.create
+        identity.name = "Joe Dirt"
+        identity.email = "joe_#{rand(1_000_000)}@dirt.com"
         identity.password = identity.password_confirmation = "abc123"
-        identity.save
+        identity.save!
       end
 
       it { identity.authenticate("abc123").must_equal identity }
@@ -166,13 +169,15 @@ module Thincloud::Authentication
         before do
           identity.name = "foobar"
           identity.password = identity.password_confirmation = ""
-          identity.save
+          identity.save!
         end
 
-        it { identity.name.must_equal "foobar" }
+        it "saves the changed values" do
+          Identity.find(identity.id).name.must_equal "foobar"
+        end
 
-        it "does not change the password" do
-          identity.authenticate("abc123").must_equal identity
+        it "does not change the existing password" do
+          Identity.find(identity.id).authenticate("abc123").must_equal identity
         end
       end
     end
