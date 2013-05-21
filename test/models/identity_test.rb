@@ -9,11 +9,19 @@ module Thincloud::Authentication
     it { identity.must allow_value("foo@bar.com").for(:email) }
     it { identity.wont allow_value("foo").for(:email) }
     it { identity.must validate_presence_of(:password_digest) }
-    it { identity.must validate_confirmation_of(:password) }
     it { identity.must_respond_to(:verification_token) }
     it { identity.verification_token.wont_be_nil }
     it { identity.verification_token.must_match /[\w\-]{22}/ }
     it { identity.must_respond_to(:verified_at) }
+
+    describe "validations for password fields" do
+      describe "when password is required" do
+        before { identity.stubs(:password_required?).returns(true) }
+
+        it { identity.must validate_presence_of(:password) }
+        it { identity.must validate_confirmation_of(:password) }
+      end
+    end
 
     describe "self.find_omniauth(omniauth)" do
       describe "with valid uid" do
@@ -62,13 +70,13 @@ module Thincloud::Authentication
 
       describe "when found" do
         before do
-          Identity.stubs(:find_by_verification_token!).with("token").returns(
-            identity
-          )
-          Identity.any_instance.stubs(:save).returns(identity)
+          @identity = Identity.create!(name: "Test", email: "foo@bar.com",
+                                       user_id: 123, password: "test",
+                                       password_confirmation: "test")
+          @identity.update_column :verification_token, "abc123"
         end
 
-        it { Identity.verify!("token").must_equal identity }
+        it { Identity.verify!("abc123").must_equal @identity }
       end
     end
 
@@ -105,7 +113,7 @@ module Thincloud::Authentication
       it { identity.uid.must_equal "xxsdflkjsdf" }
     end
 
-    describe "#generate_password_token!" do
+    describe "#generate_password_reset!" do
       before do
         Identity.any_instance.stubs(:save!)
       end
@@ -113,9 +121,64 @@ module Thincloud::Authentication
       it "generates a token and records the time" do
         identity.password_reset_token.must_be_nil
         identity.password_reset_sent_at.must_be_nil
-        identity.generate_password_token!
+        identity.generate_password_reset!
         identity.password_reset_token.wont_be_nil
         identity.password_reset_sent_at.wont_be_nil
+      end
+    end
+
+    describe "#password_required?" do
+      describe "when provider is identity" do
+        before { identity.expects(:identity_provider?).returns(true) }
+
+        describe "with password provided" do
+          before { identity.password = "abc123" }
+          it     { identity.password_required?.must_equal true }
+        end
+
+        describe "with password confirmation provided" do
+          before { identity.password_confirmation = "abc123" }
+          it     { identity.password_required?.must_equal true }
+        end
+
+        describe "without password or confirmation on persisted identity" do
+          before { identity.stubs(:new_record?).returns(false) }
+          it { identity.password_required?.must_equal false }
+        end
+      end
+
+      describe "when provider is not identity" do
+        before { identity.expects(:identity_provider?).returns(false) }
+        it     { identity.password_required?.must_equal false }
+      end
+    end
+
+
+    describe "manually update password" do
+      before do
+        identity.user = User.create
+        identity.name = "Joe Dirt"
+        identity.email = "joe_#{rand(1_000_000)}@dirt.com"
+        identity.password = identity.password_confirmation = "abc123"
+        identity.save!
+      end
+
+      it { identity.authenticate("abc123").must_equal identity }
+
+      describe "after changing non-password values" do
+        before do
+          identity.name = "foobar"
+          identity.password = identity.password_confirmation = ""
+          identity.save!
+        end
+
+        it "saves the changed values" do
+          Identity.find(identity.id).name.must_equal "foobar"
+        end
+
+        it "does not change the existing password" do
+          Identity.find(identity.id).authenticate("abc123").must_equal identity
+        end
       end
     end
   end

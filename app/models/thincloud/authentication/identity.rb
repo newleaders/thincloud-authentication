@@ -42,13 +42,14 @@ module Thincloud::Authentication
     #
     # Returns: An instance of the found `Identity`.
     # Raises: ActiveRecord::RecordNotFound if the `token` cannot be retrieved.
+    #         ActiveRecord::RecordInvalid if the record cannot be saved.
     def self.verify!(token)
       find_by_verification_token!(token).tap do |identity|
         # ensure 'uid' exists, needed for 'identity' provider
         identity.uid = identity.id if identity.uid.blank?
         identity.verification_token = nil
         identity.verified_at = Time.zone.now
-        identity.save
+        identity.save!
       end
     end
 
@@ -85,9 +86,20 @@ module Thincloud::Authentication
     # Returns: true
     #
     # Raises: ActiveRecord::RecordInvalid
-    def generate_password_token!
+    def generate_password_reset!
       self.password_reset_token = SecureRandom.urlsafe_base64
       self.password_reset_sent_at = Time.zone.now
+      save!
+    end
+
+    # Public: Clear password reset fields, reset password_required? requirement
+    #
+    # Returns: true
+    #
+    # Raises: ActiveRecord::RecordInvalid
+    def clear_password_reset!
+      self.password_reset_token = nil
+      self.password_reset_sent_at = nil
       save!
     end
 
@@ -102,7 +114,8 @@ module Thincloud::Authentication
     #
     # Returns: true or false
     def password_required?
-      identity_provider? && password_reset_token.blank?
+      identity_provider? && (new_record? || password_reset_token.present? ||
+        password.present? || password_confirmation.present?)
     end
   end
 end

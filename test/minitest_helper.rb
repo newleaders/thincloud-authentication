@@ -2,9 +2,9 @@ if RUBY_ENGINE == "ruby"
   begin
     require "simplecov"
     SimpleCov.start "rails" do
-      add_filter "test"
-      add_filter "config"
-      add_filter "vendor"
+      add_filter do |src_file|
+        src_file.filename.match /test|config|vendor|\.bundle/
+      end
       command_name "MiniTest"
     end
   rescue LoadError
