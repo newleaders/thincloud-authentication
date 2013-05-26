@@ -12,6 +12,15 @@ module Thincloud::Authentication
         it { cookies.signed[:uid].must_be_nil }
       end
 
+      describe "when not logged in and request.referer contains a path" do
+
+        it "sets the session[:return_to] to the proper path" do
+          request.expects(:referer).times(2).returns("http://test_path.com")
+          get :new
+          session[:return_to].must_equal "http://test_path.com"
+        end
+      end
+
       describe "when logged in" do
         before do
           SessionsController.any_instance.stubs(:logged_in?).returns(true)
@@ -20,6 +29,7 @@ module Thincloud::Authentication
 
         it { assert_redirected_to "/" }
       end
+
     end
 
     describe "DELETE destroy" do
