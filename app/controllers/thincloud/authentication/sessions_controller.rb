@@ -8,6 +8,9 @@ module Thincloud::Authentication
     helper "thincloud/authentication/registrations"
 
     def new
+      if request.referer
+        session[:return_to] ||= request.referer
+      end
       redirect_to after_login_path if logged_in?
       @identity = Identity.new
     end
