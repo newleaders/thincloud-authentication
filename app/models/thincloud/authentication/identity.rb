@@ -13,6 +13,7 @@ module Thincloud::Authentication
     # Ensure that a `verification_token` exists for new records.
     after_initialize do
       self.verification_token = SecureRandom.urlsafe_base64 if new_record?
+      self.resetting_identity_password = false
     end
 
     # Only validate password if the 'provider' is 'identity'.
@@ -89,7 +90,7 @@ module Thincloud::Authentication
     def generate_password_reset!
       self.password_reset_token = SecureRandom.urlsafe_base64
       self.password_reset_sent_at = Time.zone.now
-      save!
+      save_with_identity_password_reset!
     end
 
     # Public: Clear password reset fields, reset password_required? requirement
@@ -114,7 +115,9 @@ module Thincloud::Authentication
     #
     # Returns: true or false
     def password_required?
-      identity_provider? && (new_record? || password_reset_token.present?)
+      (identity_provider? && check_identity_password?) && (
+        new_record? || password_reset_token.present?
+      )
     end
 
     # Public: Determine if the password confirmation must be provided
@@ -125,5 +128,21 @@ module Thincloud::Authentication
         password.present? || password_confirmation.present?
       )
     end
+
+    private
+
+    attr_accessor :resetting_identity_password
+
+    def check_identity_password?
+      !resetting_identity_password
+    end
+
+    def save_with_identity_password_reset!
+      self.resetting_identity_password = true
+      save!
+    ensure
+      self.resetting_identity_password = false
+    end
+
   end
 end
