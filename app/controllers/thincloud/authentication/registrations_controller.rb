@@ -8,6 +8,10 @@ module Thincloud::Authentication
     helper "thincloud/authentication/registrations"
 
     def new
+      if current_user
+        redirect_to after_login_path, notice: "You are already registered."
+      end
+
       @identity = Identity.new
     end
 
