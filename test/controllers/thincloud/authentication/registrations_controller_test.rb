@@ -3,10 +3,25 @@ require "minitest_helper"
 module Thincloud::Authentication
   describe RegistrationsController do
     describe "GET new" do
-      before { get :new }
+      describe "when not authenticated" do
+        before { get :new }
 
-      it { assert_response :success }
-      it { assigns[:identity].wont_be_nil }
+        it { assert_response :success }
+        it { assigns[:identity].wont_be_nil }
+      end
+
+      describe "when authenticated" do
+        before do
+          RegistrationsController.any_instance.stubs(:current_user).returns(
+            User.new
+          )
+          get :new
+        end
+
+        it { assert_response :redirect }
+        it { assert_redirected_to "/" }
+        it { flash[:notice].must_equal "You are already registered." }
+      end
     end
 
     describe "POST create" do
