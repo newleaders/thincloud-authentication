@@ -1,5 +1,4 @@
 require "rails"
-require "strong_parameters"
 
 module Thincloud
   module Authentication
