@@ -9,8 +9,8 @@ gemspec
 gem "jquery-rails", "~> 3.0.4"
 gem "omniauth-linkedin"
 
-gem "thincloud-test",        github: "bousquet/thincloud-test",       branch: "rails4"
-gem "thincloud-test-rails",  github: "bousquet/thincloud-test-rails", branch: "rails4"
+gem "thincloud-test",        github: "bousquet/thincloud-test",       ref: "rails4"
+gem "thincloud-test-rails",  github: "bousquet/thincloud-test-rails", ref: "rails4"
 
 platforms :jruby do
   gem "activerecord-jdbc-adapter", require: false
