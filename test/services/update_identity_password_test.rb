@@ -19,7 +19,7 @@ module Thincloud::Authentication
       it "does not update the identity" do
         password_params = { password: "foo", password_confirmation: "bar" }
         subject.call(@identity, password_params).must_equal false
-        @identity.errors[:password].wont_be_empty
+        @identity.errors[:password_confirmation].wont_be_empty
         @identity.reload.password_reset_token.wont_be_nil
         @identity.password_reset_sent_at.wont_be_nil
       end
@@ -31,7 +31,7 @@ module Thincloud::Authentication
           password: "s3kr1t123", password_confirmation: "s3kr1t123"
         }
         subject.call(@identity, password_params).must_equal true
-        @identity.errors[:password].must_be_empty
+        @identity.errors[:password_confirmation].must_be_empty
         @identity.reload.password_reset_token.must_be_nil
         @identity.password_reset_sent_at.must_be_nil
       end

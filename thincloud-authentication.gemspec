@@ -15,10 +15,11 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*"] + %w[MIT-LICENSE Rakefile README.md]
 
-  s.add_dependency "rails", "~> 3.2.13"
-  s.add_dependency "strong_parameters", "~> 0.2.0"
-  s.add_dependency "omniauth", "~> 1.1.3"
-  s.add_dependency "omniauth-identity", "~> 1.1.0"
+  s.add_dependency "rails", "~> 4.0.0"
+  s.add_dependency "omniauth", "~> 1.1.4"
+  s.add_dependency "omniauth-identity", "~> 1.1.1"
+  s.add_dependency "bcrypt-ruby", "~> 3.0.0" # This might be able to be removed in Rails 4.0.1 or 4.1
 
-  s.add_development_dependency "thincloud-test-rails", "~> 1.0.0"
+
+  s.add_development_dependency "thincloud-test-rails", "~> 2.0.0.alpha"
 end
