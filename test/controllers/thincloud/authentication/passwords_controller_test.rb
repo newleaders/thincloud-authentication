@@ -70,7 +70,7 @@ module Thincloud::Authentication
         it { assert_template :edit }
         it { flash[:alert].must_match "Unable to update password." }
         it { assigns[:identity].must_equal @identity }
-        it { assigns[:identity].errors[:password].wont_be_empty }
+        it { assigns[:identity].errors[:password_confirmation].wont_be_empty }
       end
 
       describe "with valid identity attributes" do

@@ -18,7 +18,6 @@ require File.expand_path("../dummy/config/environment",  __FILE__)
 require "minitest/autorun"
 require "minitest/rails"
 require "minitest/pride"
-require "minitest-rails-shoulda"
 
 Rails.backtrace_cleaner.remove_silencers!
 

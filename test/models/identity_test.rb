@@ -4,16 +4,56 @@ module Thincloud::Authentication
   describe Identity do
     let(:identity) { Identity.new }
 
-    it { identity.must validate_presence_of(:name) }
-    it { identity.must validate_presence_of(:email) }
-    it { identity.must allow_value("foo@bar.com").for(:email) }
-    it { identity.wont allow_value("foo").for(:email) }
-    it { identity.must validate_presence_of(:password_digest) }
-    it { identity.must validate_confirmation_of(:password) }
+    it { identity.provider.must_equal "identity" }
     it { identity.must_respond_to(:verification_token) }
     it { identity.verification_token.wont_be_nil }
     it { identity.verification_token.must_match /[\w\-]{22}/ }
     it { identity.must_respond_to(:verified_at) }
+
+    describe "validates_presence_of" do
+      before { identity.valid? }
+
+      [:name, :email, :password].each do |field|
+        it { identity.errors[field].must_include "can't be blank" }
+      end
+    end
+
+    describe "validates_confirmation_of :password" do
+      describe "matching passwords" do
+        before do
+          identity.password = identity.password_confirmation = "foo"
+          identity.valid?
+        end
+
+        it { identity.errors[:password_confirmation].must_equal [] }
+      end
+
+      describe "non-matching passwords" do
+        before do
+          identity.password = "foo"
+          identity.password_confirmation = "bar"
+          identity.valid?
+        end
+
+        it { identity.errors[:password_confirmation].must_include "doesn't match Password" }
+      end
+    end
+
+    describe "invalid values" do
+      before do
+        identity.email = "foo"
+        identity.valid?
+      end
+      it { identity.errors[:email].must_include "is invalid" }
+    end
+
+    describe "valid values" do
+      before do
+        identity.email = "foo@blah.com"
+        identity.valid?
+      end
+      it { identity.errors[:email].wont_include "is invalid" }
+    end
 
     describe "self.find_omniauth(omniauth)" do
       describe "with valid uid" do

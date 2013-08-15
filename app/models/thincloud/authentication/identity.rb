@@ -1,7 +1,6 @@
 module Thincloud::Authentication
   # Public: This class represents a User identity (name, email, login provider)
   class Identity < ::OmniAuth::Identity::Models::ActiveRecord
-    include ActiveModel::ForbiddenAttributesProtection  # strong_parameters
 
     belongs_to :user
 
