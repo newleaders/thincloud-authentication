@@ -6,12 +6,14 @@ source "http://rubygems.org"
 gemspec
 
 # jquery-rails is used by the dummy application
-gem "jquery-rails"
+gem "jquery-rails", "~> 3.0.4"
 gem "omniauth-linkedin"
-gem "strong_parameters"
+
+gem "thincloud-test",        github: "bousquet/thincloud-test",       branch: "rails4"
+gem "thincloud-test-rails",  github: "bousquet/thincloud-test-rails", branch: "rails4"
 
 platforms :jruby do
-  gem "activerecord-jdbc-adapter", :require => false
+  gem "activerecord-jdbc-adapter", require: false
 end
 
 group :test do
@@ -23,8 +25,8 @@ group :test do
   end
 
   platforms :jruby do
-    gem "activerecord-jdbcmysql-adapter", :require => false
-    gem "activerecord-jdbcpostgresql-adapter", :require => false
-    gem "activerecord-jdbcsqlite3-adapter", :require => false
+    gem "activerecord-jdbcmysql-adapter",      require: false
+    gem "activerecord-jdbcpostgresql-adapter", require: false
+    gem "activerecord-jdbcsqlite3-adapter",    require: false
   end
 end
