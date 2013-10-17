@@ -18,7 +18,7 @@ module Thincloud
       # Returns: An instance of `User` or `nil`.
       def current_user
         return nil if cookies.signed[:uid].blank?
-        @current_user ||= User.find(cookies.signed[:uid])
+        @current_user ||= User.where(id: cookies.signed[:uid]).first
       end
 
       # Protected:  Determine if the current request has a logged in user.
