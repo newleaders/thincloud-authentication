@@ -13,7 +13,6 @@ gem "omniauth-linkedin"
 gem "minitest",                 "~> 4.2.0"
 gem "thincloud-test",           github: "newleaders/thincloud-test",           ref: "rails4"
 gem "thincloud-test-rails",     github: "newleaders/thincloud-test-rails",     ref: "rails4"
-gem "thincloud-authentication", github: "newleaders/thincloud-authentication", ref: "rails4"
 
 platforms :jruby do
   gem "activerecord-jdbc-adapter", require: false
