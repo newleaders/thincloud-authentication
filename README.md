@@ -174,6 +174,14 @@ Both of the methods above will return `true` or `false`.
 * Add multiple, configurable strategy options
 * Add a configuration option to customize the mailers
 
+## Local Development
+
+In order to test locally, follow the following steps:
+
+1. `rake db:setup`
+2. `rake app:test:all:db`
+3. ???
+4. Profit
 
 ## Contributing
 
