@@ -1,6 +1,6 @@
 # Thincloud::Authentication
 
-[![Build Status](https://secure.travis-ci.org/newleaders/thincloud-authentication.png)](http://travis-ci.org/newleaders/thincloud-authentication) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/newleaders/thincloud-authentication)
+[![Build Status](https://secure.travis-ci.org/newleaders/thincloud-authentication.png)](http://travis-ci.org/newleaders/thincloud-authentication) [![Code Climate](https://codeclimate.com/github/newleaders/thincloud-authentication.png)](https://codeclimate.com/github/newleaders/thincloud-authentication)
 
 ## Description
 
@@ -187,6 +187,6 @@ Both of the methods above will return `true` or `false`.
 
 ## License
 
-* Freely distributable and licensed under the [MIT license](http://newleaders.mit-license.org/2012/license.html).
-* Copyright (c) 2012 New Leaders ([opensource@newleaders.com](opensource@newleaders.com))
+* Freely distributable and licensed under the [MIT license](http://newleaders.mit-license.org/2012-2014/license.html).
+* Copyright (c) 2012-2014 New Leaders ([opensource@newleaders.com](opensource@newleaders.com))
 * [https://newleaders.com](https://newleaders.com)
