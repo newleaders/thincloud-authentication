@@ -19,6 +19,9 @@ platforms :rbx do
 end
 
 group :test do
+  gem "thincloud-test", github: "newleaders/thincloud-test", ref: "rails4"
+  gem "thincloud-test-rails", github: "newleaders/thincloud-test-rails", ref: "rails4"
+
   platforms :ruby do
     gem "mysql2"
     gem "pg"

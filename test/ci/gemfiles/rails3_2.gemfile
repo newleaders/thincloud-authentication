@@ -20,6 +20,8 @@ platforms :rbx do
 end
 
 group :test do
+  gem "thincloud-test-rails", "~> 1.0.0"
+
   platforms :ruby do
     gem "mysql2"
     gem "pg"
