@@ -11,5 +11,8 @@ env:
   - CI=true RAILS_ENV=test JRUBY_OPTS=--1.9 RBXOPT=-X19 DB=sqlite
 before_script: "./test/ci/before_script.sh"
 script: "./test/ci/ci_runner.sh"
+gemfile:
+- ./test/ci/gemfiles/rails3_2.gemfile
+- ./test/ci/gemfiles/rails4_0.gemfile
 notifications:
   flowdock: 1ec5c0efa5a264c67c6ba3b2e6574a70

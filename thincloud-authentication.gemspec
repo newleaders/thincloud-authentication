@@ -15,10 +15,9 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*"] + %w[MIT-LICENSE Rakefile README.md]
 
-  s.add_dependency "rails", "~> 3.2.13"
-  s.add_dependency "strong_parameters", "~> 0.2.0"
-  s.add_dependency "omniauth", "~> 1.1.3"
-  s.add_dependency "omniauth-identity", "~> 1.1.0"
+  s.add_dependency "rails", ">= 3.2.16"
+  s.add_dependency "omniauth", "~> 1.1.4"
+  s.add_dependency "omniauth-identity", "~> 1.1.1"
 
   s.add_development_dependency "thincloud-test-rails", "~> 1.0.0"
 end
