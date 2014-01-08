@@ -11,14 +11,15 @@ A Rails Engine to provide authentication for Thincloud applications.
 This gem requires Rails 3.2+ and has been tested on the following versions:
 
 * 3.2
+* 4.0
 
 This gem has been tested against the following Ruby versions:
 
-* MRI 1.9.2
 * MRI 1.9.3
 * MRI 2.0.0
-* JRuby 1.6+ (with `JRUBY_OPTS=--1.9`)
-* Rubinius 2.0.0dev (with `RBXOPT=-X19`)
+* MRI 2.1.0
+* JRuby 1.7+ (with `JRUBY_OPTS=--1.9`)
+* Rubinius 2.2+ (with `RBXOPT=-X19`)
 
 This gem has been tested against the following database versions:
 

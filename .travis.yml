@@ -1,18 +1,20 @@
 language: ruby
 rvm:
-  - 1.9.2
-  - 1.9.3
-  - 2.0.0
-  - jruby-19mode
-  - rbx-19mode
+- 1.9.3
+- 2.0.0
+- 2.1.0
+- jruby-1.7.9
+- rbx-2.2.1
 env:
-  - CI=true RAILS_ENV=test JRUBY_OPTS=--1.9 RBXOPT=-X19 DB=mysql
-  - CI=true RAILS_ENV=test JRUBY_OPTS=--1.9 RBXOPT=-X19 DB=postgres
-  - CI=true RAILS_ENV=test JRUBY_OPTS=--1.9 RBXOPT=-X19 DB=sqlite
-before_script: "./test/ci/before_script.sh"
-script: "./test/ci/ci_runner.sh"
+  matrix:
+  - RAILS_ENV=test JRUBY_OPTS=--1.9 RBXOPT=-X19 DB=mysql
+  - RAILS_ENV=test JRUBY_OPTS=--1.9 RBXOPT=-X19 DB=postgres
+  - RAILS_ENV=test JRUBY_OPTS=--1.9 RBXOPT=-X19 DB=sqlite
 gemfile:
 - ./test/ci/gemfiles/rails3_2.gemfile
 - ./test/ci/gemfiles/rails4_0.gemfile
+before_script: ./test/ci/before_script.sh
+script: ./test/ci/ci_runner.sh
 notifications:
-  flowdock: 1ec5c0efa5a264c67c6ba3b2e6574a70
+  flowdock:
+    secure: JbmGLEINPpYd6zDvERmLiZNPATVrTCLo1uiUIvqPM4dAI+SuEqdVaoT7Nl0oFACxwbIo7lzi7SPFKSg1iirrn2dHkFqs1fg+Jb5L6LlhKgp1J2BLgCBhE49RK/Aexm7Md9iAg+GnN5c/znYmtq7y/WT6QxA57wP/vuggVOiMgHk=
