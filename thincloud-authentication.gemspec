@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*"] + %w[MIT-LICENSE Rakefile README.md]
 
-  s.add_dependency "rails", ">= 3.2.16"
+  s.add_dependency "rails"
   s.add_dependency "bcrypt-ruby"
   s.add_dependency "omniauth", "~> 1.1.4"
   s.add_dependency "omniauth-identity", "~> 1.1.1"

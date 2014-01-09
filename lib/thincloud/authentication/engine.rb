@@ -1,5 +1,5 @@
 require "rails"
-require "strong_parameters"
+require "strong_parameters" if Rails.version < "4.0"
 
 module Thincloud
   module Authentication
